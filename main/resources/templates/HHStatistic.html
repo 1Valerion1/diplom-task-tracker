@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Статистика по Java</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h2>Информация о вакансиях Java</h2>
+<div th:if="${vacancy != null}">
+    <p>Найдено вакансий: <span th:text="${vacancy.numberVacancies}"></span></p>
+    <p>Анализ проведен на основе <a th:href="${vacancy.alternateUrl}">поискового запроса</a></p>
+</div>
+
+<div th:unless="${vacancy != null}">
+    <p>Информация о вакансиях Java недоступна.</p>
+</div>
+</body>
+</html>
