@@ -17,7 +17,14 @@ public class Questions {
     private Long id;
     @NotBlank
     @Column(nullable = false)
-    private String questions;
+    private String titleQuestions;
+    @NotBlank
+    @Column(nullable = false)
+    private String nameThemes;
+    @NotBlank
+    @Column(nullable = false)
+    private String answer;
+    
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     private Theme theme;

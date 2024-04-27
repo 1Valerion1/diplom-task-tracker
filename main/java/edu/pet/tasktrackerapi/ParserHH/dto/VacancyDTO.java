@@ -12,7 +12,6 @@ public class VacancyDTO {
     @JsonProperty("alternate_url")
     private String alternateUrl;
 
-
     public VacancyDTO() {
     }
 

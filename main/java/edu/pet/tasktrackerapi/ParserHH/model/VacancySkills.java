@@ -1,6 +1,7 @@
 package edu.pet.tasktrackerapi.ParserHH.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -18,6 +19,7 @@ public class VacancySkills {
     @Column
     private int skillCount;
     @ToString.Exclude
+    @JsonSerialize(as = Vacancy.class)
     @ManyToOne(fetch = FetchType.EAGER)
     private Vacancy vacancy;
 

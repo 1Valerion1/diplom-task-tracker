@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @Builder
 @Table(name = "theme")
-public class Theme  implements Serializable {
+public class Theme implements Serializable {
 
     @Id
     @Column(nullable = false)

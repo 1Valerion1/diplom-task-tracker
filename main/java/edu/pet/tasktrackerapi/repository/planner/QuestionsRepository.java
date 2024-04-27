@@ -18,8 +18,9 @@ public interface QuestionsRepository extends JpaRepository<Questions, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Questions t SET t.questions = :questions WHERE t.id = :id")
-    String update(@Param("id") Long id, @Param("questions") String questions);
+    @Query("UPDATE Questions t SET t.titleQuestions = :titleQuestions, t.nameThemes = :nameThemes, t.answer = :answer WHERE t.id = :id")
+    String update(@Param("id") Long id, @Param("titleQuestions") String titleQuestions, @Param("nameThemes") String nameThemes, @Param("answer") String answer);
+
 
 
 

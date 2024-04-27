@@ -21,7 +21,9 @@ public class QuestionsService {
     public Long createQuestions(Theme theme, Questions questions) {
         Questions question = Questions
                 .builder()
-                .questions(questions.getQuestions())
+                .titleQuestions(questions.getTitleQuestions())
+                .nameThemes(questions.getNameThemes())
+                .answer(questions.getAnswer())
                 .theme(theme)
                 .build();
 
@@ -43,7 +45,7 @@ public class QuestionsService {
     }
 // так как update  ничего не возвращает
     public void updateQuestions(Questions questions) {
-         questionsRepository.update(questions.getId(), questions.getQuestions());
+         questionsRepository.update(questions.getId(), questions.getTitleQuestions(), questions.getNameThemes(),questions.getAnswer());
     }
 
 //    public Questions updateQuestions(Questions questions) {

@@ -42,7 +42,7 @@ public class HHController {
     @Autowired
     private VacancyService vacancyService;
 
-    @GetMapping(value = "/getJava", produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = "/updateData", produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getVacancyJava() {
         String searchQuery = "Java";
         String URL = "https://api.hh.ru/vacancies";
@@ -78,7 +78,7 @@ public class HHController {
         }
     }
 
-    @GetMapping(value = "/getJava", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/updateData", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Getting Vacansy start update data")
     public ResponseEntity getVacancyJavJson() {
         String searchQuery = "Java";
