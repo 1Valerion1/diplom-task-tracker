@@ -39,6 +39,9 @@ public class QuestionsService {
                 }.getType()
         );
     }
+    public List<Questions> getAllQuestions(){
+        return questionsRepository.findAll();
+    }
 
     public List<Questions> getUsersTasksEntities(Theme theme) {
         return questionsRepository.getQuestByTheme_Id(theme.getId());

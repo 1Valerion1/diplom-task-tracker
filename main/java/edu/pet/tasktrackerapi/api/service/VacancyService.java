@@ -1,8 +1,8 @@
-package edu.pet.tasktrackerapi.ParserHH.service;
+package edu.pet.tasktrackerapi.api.service;
 
-import edu.pet.tasktrackerapi.ParserHH.dto.VacancyDTO;
-import edu.pet.tasktrackerapi.ParserHH.model.Vacancy;
-import edu.pet.tasktrackerapi.ParserHH.model.VacancySkills;
+import edu.pet.tasktrackerapi.api.dto.VacancyDTO;
+import edu.pet.tasktrackerapi.api.model.Vacancy;
+import edu.pet.tasktrackerapi.api.model.VacancySkills;
 import edu.pet.tasktrackerapi.repository.parserHH.VacancyRepository;
 import edu.pet.tasktrackerapi.repository.parserHH.VacancySkillsRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,5 @@
 package edu.pet.tasktrackerapi.repository.planner;
 
-import edu.pet.tasktrackerapi.api.model.Plan;
 import edu.pet.tasktrackerapi.api.model.Questions;
 import edu.pet.tasktrackerapi.api.model.Theme;
 import org.springframework.data.jpa.repository.JpaRepository;

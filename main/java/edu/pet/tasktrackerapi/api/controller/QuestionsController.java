@@ -11,11 +11,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/v1/questions")
 @RequiredArgsConstructor
 @Tag(name = "Questions", description = "Methods for questions management")
@@ -25,7 +27,7 @@ public class QuestionsController {
     @GetMapping(produces = "application/json" , value = "/get")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting list of quest")
-    public ResponseEntity<List<Questions>> getTasks(@AuthenticationPrincipal Theme theme){
+    public ResponseEntity<List<Questions>> getQuestions(@AuthenticationPrincipal Theme theme){
 
         System.out.println(questionsService.getThemesQuestions(theme));
 
@@ -63,4 +65,22 @@ public class QuestionsController {
 
         return ResponseEntity.ok(uuid);
     }
+
+    @GetMapping
+    public String showQuestions(Model model) {
+        model.addAttribute("questions", questionsService.getAllQuestions());
+        return "questions";
+    }
+
+    @GetMapping(produces = "application/json" , value = "/getAll")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Operation(description = "Getting list of quest")
+    public ResponseEntity<List<Questions>> getAllQuest(){
+
+        //  System.out.println(questionsService.getAllQuestions());
+
+        return ResponseEntity.ok(questionsService.getAllQuestions());
+    }
+
+
 }

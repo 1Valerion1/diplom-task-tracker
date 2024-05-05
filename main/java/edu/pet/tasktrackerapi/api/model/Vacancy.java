@@ -1,4 +1,4 @@
-package edu.pet.tasktrackerapi.ParserHH.model;
+package edu.pet.tasktrackerapi.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

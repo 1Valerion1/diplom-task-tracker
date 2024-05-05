@@ -3,14 +3,11 @@ package edu.pet.tasktrackerapi.api.service;
 import edu.pet.tasktrackerapi.api.model.Plan;
 import edu.pet.tasktrackerapi.api.model.Questions;
 import edu.pet.tasktrackerapi.api.model.Theme;
-import edu.pet.tasktrackerapi.exception.NotFoundException;
-import edu.pet.tasktrackerapi.repository.planner.QuestionsRepository;
 import edu.pet.tasktrackerapi.repository.planner.ThemesRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

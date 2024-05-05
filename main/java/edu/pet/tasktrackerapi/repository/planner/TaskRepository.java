@@ -3,6 +3,7 @@ package edu.pet.tasktrackerapi.repository.planner;
 import edu.pet.tasktrackerapi.api.model.Enum.Priorities;
 import edu.pet.tasktrackerapi.api.model.Task;
 import edu.pet.tasktrackerapi.api.model.User;
+import edu.pet.tasktrackerapi.repository.planner.mapper.TaskEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,13 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 
-public interface TaskRepository extends JpaRepository<Task, Long> {
+public interface TaskRepository extends JpaRepository<Task, Long> { // тут поменял на TaskEntity с Task
     List<Task> getTasksByUser_Id(Long id);
 
     void deleteTaskById(Long id);
 
     int countTasksByUserAndCompleted(User user, boolean completed);
-
 
     @Transactional
     @Modifying

@@ -1,4 +1,4 @@
-package edu.pet.tasktrackerapi.ParserHH.service;
+package edu.pet.tasktrackerapi.api.service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;

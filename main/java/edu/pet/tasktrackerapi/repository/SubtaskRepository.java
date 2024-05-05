@@ -2,7 +2,6 @@ package edu.pet.tasktrackerapi.repository;
 
 import edu.pet.tasktrackerapi.api.model.Subtask;
 import edu.pet.tasktrackerapi.api.model.Task;
-import edu.pet.tasktrackerapi.api.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.UUID;
 
 public interface SubtaskRepository extends JpaRepository<Subtask, Long> {

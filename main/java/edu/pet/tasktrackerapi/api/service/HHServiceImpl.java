@@ -1,4 +1,4 @@
-package edu.pet.tasktrackerapi.ParserHH.service;
+package edu.pet.tasktrackerapi.api.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

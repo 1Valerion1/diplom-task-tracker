@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta content="text/html"; charset="UTF-8">
+    <title>Статистика по вакансии</title>
+    <link rel="icon"  th:src="@{/images/ourbor.png}" />
+    <!--    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />-->
+    <style>
+        body {
+            background-color:#FFFFFF;
+        margin: 0;
+        margin-bottom: 100px;
+        color: #000;
+        font-size: 15px;
+        font-family: Arial, sans-serif;
+
+        }
+
+        header {
+        background-color: #cbe5f8;
+        text-align: center;
+        padding: 0;
+        }
+
+        header h1 {
+        font-size: 24px;
+        margin: 0;
+        }
+
+        header nav {
+
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        }
+
+        header nav ul {
+        list-style-type: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+
+        header nav ul li {
+        margin: 0 10px;
+        }
+
+        header nav ul li a {
+        color: #555;
+        text-decoration: none;
+        }
+
+        main {
+        padding: 10px;
+        }
+
+        h3 {
+        text-align: center;
+        font-size: 20px;
+        margin-top:20px;
+        margin-bottom: 20px;
+        }
+
+
+        #id2 {
+        width: 25%;
+        border-collapse: collapse;
+        float: left;
+        margin:10px;
+        margin-right: 60px;
+        }
+
+        table th,
+        table td {
+        border: 1px solid #333;
+        padding: 3px;
+        border-color: inherit;
+        border-style:solid;
+        }
+
+        table th {
+        text-align: center;
+        }
+
+        table td {
+        text-align: left;
+        vertical-align: inherit;
+        }
+
+        a{
+        color:black;
+        }
+
+
+        #pie {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+        #textVac{
+        padding-left: 10px;
+        background-color:#fsdfsd;
+        }
+        /* Media queries */
+
+        @media (max-width: 768px) {
+        header nav ul {
+        flex-direction: row;
+        }
+
+        header nav ul li {
+        margin-bottom: 5px;
+        }
+        }
+        svg {
+            width: 30px;
+            margin: 0 auto;
+            display: block;
+        }
+
+
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <!--            <li><svg><img th:src="@{/images/ourbor.png}"></svg></li>-->
+            <li><h3 href="/">OuroborosOdyssey</h3></li>
+            <li><a href="http://localhost:8081/api/v1/statistics">Требования на вакансии</a></li>
+            <li><a href="http://localhost:8081/api/v1/plans">Посмотреть план изучения</a></li>
+            <li><a href="http://localhost:8081/api/v1/tasks">Планировщик</a></li>
+            <li><a href="http://localhost:8081/api/v1/questions">Вопросы</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<div id="textVac" th:each="vacancy : ${vacancies}">
+    <p>По направлению: <span th:text="${vacancy.profession}"></span></p>
+    <p>Найдено вакансий: <span th:text="${vacancy.numberVacancies}"></span></p>
+    <p>Анализ проведен на основе <a th:href="${vacancy.url}">поискового запроса</a></p>
+    <p>В данном разделе представлены часто требуемые навыки при поиске работы по данному направлению.</p>
+</div>
+
+<h3>Требуемые навыки</h3>
+<table id="id2">
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Навыки</th>
+        <th>Упоминаний</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="skill : ${skills}">
+        <td th:text="${skill.skillName}">Skill Name</td>
+        <td th:text="${skill.skillCount}">Skill Count</td>
+    </tr>
+    </tbody>
+</table>
+<div  id="pie">
+    <canvas id="myChart"></canvas>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script>
+
+    const tableBody = document.querySelector('tbody');
+    const rows = tableBody.querySelectorAll('tr');
+
+    rows.forEach((row, index) => {
+    const counterCell = document.createElement('td');
+    counterCell.textContent = index + 1;
+    row.insertBefore(counterCell, row.firstChild);
+
+    });
+
+
+    const tableData = document.querySelectorAll('tbody tr');
+    const skills = [];
+    for (let i = 0; i < 40; i++) {
+    const skillName = tableData[i].querySelector('td:nth-child(2)').textContent;
+    const skillCount = tableData[i].querySelector('td:nth-child(3)').textContent;
+
+    skills.push({
+    name: skillName,
+    count: skillCount
+    });
+    }
+
+    // Create a new chart object
+    const chart = new Chart(document.getElementById('myChart'), {
+    type: 'pie',
+    data: {
+    labels: skills.map(skill => skill.name),
+    datasets: [{
+    data: skills.map(skill => skill.count),
+        backgroundColor: ['#3366cc', '#dc3912', '#ff9900', '#109618',
+            '#990099', '#0099c6', '#dd4477', '#66aa00', '#b82e2e',
+            '#316395', '#994499', '#22aa99', '#aaaa11', '#6633cc',
+            '#e67300', '#8b0707', '#651067', '#329262', '#5574a6',
+            '#3b3eac', '#b77322', '#16d620', '#b91383', '#f4359e',
+            '#9c5935', '#a9c413', '#2a778d', '#668d1c', '#bea413',
+            '#0c5922']
+    }]
+    },
+    options: {
+    title: {
+    display: true,
+    text: 'Требуемые навыки'
+    },
+    legend: {
+    position: 'bottom'
+    }
+    }
+    });
+</script>
+</body>
+</html>
+

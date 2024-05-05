@@ -32,6 +32,7 @@ public class TaskService {
                 .completed(false)
                 .user(user)
                 .build();
+
         return taskRepository.save(newTask).getId();
     }
 
@@ -53,6 +54,7 @@ public class TaskService {
         if (!taskRepository.existsByUserAndId(user, taskDto.getId())) {
             throw new NotFoundException();
         }
+       // TaskEntity taskEntity = modelMapper.map(task, TaskEntity.class);
         Task task = taskRepository.findById(taskDto.getId()).get();
         if ((taskDto.isCompleted() && !task.isCompleted())) {
             completeTask(taskDto);

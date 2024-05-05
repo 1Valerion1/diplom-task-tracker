@@ -2,7 +2,6 @@ package edu.pet.tasktrackerapi.api.controller;
 
 import edu.pet.tasktrackerapi.api.dto.NewTaskRequest;
 import edu.pet.tasktrackerapi.api.dto.TaskDto;
-import edu.pet.tasktrackerapi.api.model.Task;
 import edu.pet.tasktrackerapi.api.model.User;
 import edu.pet.tasktrackerapi.api.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,10 +11,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 //TODO document errors  http://localhost:8081/swagger-ui/index.html#/Tasks/createTask
 
 @RestController
@@ -67,6 +66,10 @@ public class TaskController {
         return ResponseEntity.ok(uuid);
     }
 
-
+//    @GetMapping
+//    public String showQuestions(Model model) {
+//        model.addAttribute("task", taskService.get());
+//        return "task";
+//    }
 
 }
