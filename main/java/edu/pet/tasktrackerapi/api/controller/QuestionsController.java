@@ -4,12 +4,14 @@ package edu.pet.tasktrackerapi.api.controller;
 import edu.pet.tasktrackerapi.api.model.Questions;
 import edu.pet.tasktrackerapi.api.model.Theme;
 import edu.pet.tasktrackerapi.api.service.QuestionsService;
+import edu.pet.tasktrackerapi.api.service.ThemesSevice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,33 +25,47 @@ import java.util.List;
 @Tag(name = "Questions", description = "Methods for questions management")
 public class QuestionsController {
     private final QuestionsService questionsService;
+    private final ThemesSevice themesSevice;
 
-    @GetMapping(produces = "application/json" , value = "/get")
+
+    @GetMapping(produces = "application/json" , value = "/getAll")
     @SecurityRequirement(name = "Bearer Authentication")
-    @Operation(description = "Getting list of quest")
-    public ResponseEntity<List<Questions>> getQuestions(@AuthenticationPrincipal Theme theme){
+    @Operation(description = "Getting a list of questions")
+    public ResponseEntity<List<Questions>> getAllQuest(){
 
-        System.out.println(questionsService.getThemesQuestions(theme));
+        //  System.out.println(questionsService.getAllQuestions());
 
-        return ResponseEntity.ok(questionsService.getThemesQuestions(theme));
+        return ResponseEntity.ok(questionsService.getAllQuestions());
+    }
+    @GetMapping(produces = "application/json" , value = "/getQuestionsThemes")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Operation(description = "Getting a list of questions on a theme")
+    public ResponseEntity<List<Questions>> getQuestionsThemes(@RequestParam Long themeId){
+        System.out.println(questionsService.getThemeQuestions(themeId));
+        return ResponseEntity.ok(questionsService.getThemeQuestions(themeId));
     }
 
     @PostMapping(produces = "application/json" , value = "/create")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Creating new quest")
-    public ResponseEntity<Long> createTask(@AuthenticationPrincipal Theme theme, @RequestBody @Valid Questions quest){
+    public ResponseEntity<Long> createQuest(@RequestBody @Valid Questions quest){
+        List<Theme> themes =  themesSevice.findByName(quest.getNameThemes());
+        if(themes.isEmpty()){
+            // Ошибка: тема не найдена, обработайте этот случай соответствующим образом
+            return ResponseEntity.notFound().build();
+        }
+        Theme theme = themes.get(0);
+        quest.setTheme(theme);
 
-        Long taskId = questionsService.createQuestions(theme, quest);
+        Long questId = questionsService.createQuestions(quest);
 
-        return ResponseEntity.ok(taskId);
+        return ResponseEntity.ok(questId);
     }
-
-
 
     @PutMapping(value = "/update", produces = "application/json")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Updating existing quest")
-    public ResponseEntity<?> updateTask(@RequestBody @Valid Questions quest){
+    public ResponseEntity<?> updateQuest(@RequestBody @Valid Questions quest){
 
         questionsService.updateQuestions(quest);
 
@@ -57,9 +73,10 @@ public class QuestionsController {
     }
 
     @DeleteMapping(path = "/delete/{uuid}", produces = "application/json")
+    // @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Delete quest by id")
-    public ResponseEntity<Long> deleteTask(@AuthenticationPrincipal Theme theme, @PathVariable Long uuid){
+    public ResponseEntity<Long> deleteQuest(@AuthenticationPrincipal Theme theme, @PathVariable Long uuid){
 
         questionsService.deleteQuest(theme, uuid);
 
@@ -71,16 +88,4 @@ public class QuestionsController {
         model.addAttribute("questions", questionsService.getAllQuestions());
         return "questions";
     }
-
-    @GetMapping(produces = "application/json" , value = "/getAll")
-    @SecurityRequirement(name = "Bearer Authentication")
-    @Operation(description = "Getting list of quest")
-    public ResponseEntity<List<Questions>> getAllQuest(){
-
-        //  System.out.println(questionsService.getAllQuestions());
-
-        return ResponseEntity.ok(questionsService.getAllQuestions());
-    }
-
-
 }

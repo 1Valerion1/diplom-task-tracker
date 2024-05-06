@@ -1,9 +1,7 @@
 package edu.pet.tasktrackerapi.api.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +10,8 @@ import java.util.List;
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor(force = true)
 @Table(name = "theme")
 public class Theme implements Serializable {
 
@@ -24,7 +24,7 @@ public class Theme implements Serializable {
     @Column
     private String details;
     @Column
-    private String Links;
+    private String links;
 
     @Column
     @OneToMany(mappedBy = "theme", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -33,6 +33,7 @@ public class Theme implements Serializable {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     private Plan plan;
+
 
 
 }

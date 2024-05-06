@@ -136,4 +136,61 @@
 </header>
 
 
+
+<div >
+    <h3>Управление вопросами</h3>
+
+    <!-- Создание нового вопроса -->
+    <form th:action="@{/api/v1/questions/create}" method="post">
+        <h4>Название вопроса</h4>
+        <input type="text" placeholder="Название вопроса" name="titleQuestions" required>
+        <h4>Название темы</h4>
+        <input type="text" placeholder="Название темы" name="nameThemes" required>
+        <h4>Выберите тему</h4>
+        <select name="themeId">
+            <option th:each="theme : ${themes}" th:value="${theme.id}" th:text="${theme.name}"></option>
+        </select>
+        <h4>Ответ</h4>
+        <input type="text" placeholder="Ответ" name="answer" required>
+        <button type="submit">Создать</button>
+    </form>
+
+    <!-- Обновление вопроса -->
+    <form th:action="@{/api/v1/questions/update}" method="put">
+        <h4>Название вопроса</h4>
+        <input type="text" placeholder="Название вопроса" name="title" required>
+        <h4>Название темы</h4>
+        <input type="text" placeholder="Название темы" name="nameThemes" required>
+        <h4>Выберите тему</h4>
+        <select name="themeId">
+            <option th:each="theme : ${themes}" th:value="${theme.id}" th:text="${theme.name}"></option>
+        </select>
+        <h4>Ответ</h4>
+        <input type="text" placeholder="Ответ" name="answer" required>
+        <button type="submit">Обновить</button>
+    </form>
+</div>
+    <!-- Добавьте аналогичную форму для обновления -->
+
+    <!-- Удаление вопроса -->
+
+
+<!--<main th:if="${!admin}">-->
+<main>
+    <h3>Список всех вопросов</h3>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Theme</th>
+            <th>Answer</th>
+        </tr>
+        <tr th:each="question : ${questions}">
+            <td th:text="${question.titleQuestions}">Sample Title</td>
+            <td th:text="${question.nameThemes}">Sample Theme</td>
+            <td th:text="${question.answer}">Sample Answer</td>
+        </tr>
+    </table>
+</main>
+
+
 </body>

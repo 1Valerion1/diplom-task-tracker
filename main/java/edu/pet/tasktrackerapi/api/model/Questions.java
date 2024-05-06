@@ -1,5 +1,6 @@
 package edu.pet.tasktrackerapi.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -25,6 +26,7 @@ public class Questions {
     private String answer;
     
     @ToString.Exclude
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     private Theme theme;
 }

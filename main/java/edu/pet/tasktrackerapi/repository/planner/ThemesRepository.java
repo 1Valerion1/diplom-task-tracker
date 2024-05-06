@@ -9,8 +9,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ThemesRepository extends JpaRepository<Theme, Long> {
+
+    List<Theme> findByTitle(String name);
+    Optional<Theme> findById(Long id);
 
     List<Questions> getThemeByPlan_Id(Long id);
 
@@ -18,7 +22,7 @@ public interface ThemesRepository extends JpaRepository<Theme, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Theme t SET t.title = :title, t.details = :details, t.Links = :links WHERE t.id = :id")
+    @Query("UPDATE Theme t SET t.title = :title, t.details = :details, t.links = :links WHERE t.id = :id")
     void update(@Param("id") Long id, @Param("title") String title, @Param("details") String details, @Param("links") String links);
 
 

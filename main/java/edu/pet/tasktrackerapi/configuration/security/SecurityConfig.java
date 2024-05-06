@@ -26,8 +26,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .httpBasic(Customizer.withDefaults());
-  /*              .csrf()
+                // .httpBasic(Customizer.withDefaults());
+                .csrf()
                 .disable()
 
 //                .authorizeHttpRequests()
@@ -44,7 +44,7 @@ public class SecurityConfig {
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-*/
+
         return http
                 .build();
     }
@@ -58,6 +58,10 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/auth/**")
                 .requestMatchers("/api/v1/statistics/**")
                 .requestMatchers("/api/v1/questions/**")
+                .requestMatchers("/api/v1/plans/**")
+                .requestMatchers("/api/v1/tasks/**")
+                .requestMatchers("/api/v1/user/**")
+
                 .requestMatchers("/v3/api-docs/**")
                 .requestMatchers("configuration/**")
                 .requestMatchers("/swagger*/**")
