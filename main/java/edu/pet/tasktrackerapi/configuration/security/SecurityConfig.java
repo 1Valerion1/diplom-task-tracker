@@ -60,6 +60,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/questions/**")
                 .requestMatchers("/api/v1/plans/**")
                 .requestMatchers("/api/v1/tasks/**")
+                .requestMatchers("/api/v1/themes/**")
+
                 .requestMatchers("/api/v1/user/**")
 
                 .requestMatchers("/v3/api-docs/**")

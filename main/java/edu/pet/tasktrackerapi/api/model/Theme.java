@@ -33,7 +33,4 @@ public class Theme implements Serializable {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     private Plan plan;
-
-
-
 }

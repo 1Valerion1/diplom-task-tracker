@@ -39,7 +39,7 @@ public class QuestionsController {
     }
     @GetMapping(produces = "application/json" , value = "/getQuestionsThemes")
     @SecurityRequirement(name = "Bearer Authentication")
-    @Operation(description = "Getting a list of questions on a theme")
+    @Operation(description = "Getting questions on a theme")
     public ResponseEntity<List<Questions>> getQuestionsThemes(@RequestParam Long themeId){
         System.out.println(questionsService.getThemeQuestions(themeId));
         return ResponseEntity.ok(questionsService.getThemeQuestions(themeId));

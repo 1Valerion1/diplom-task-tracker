@@ -1,34 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta content="text/html"; charset="UTF-8">
+    <meta content="text/html" ; charset="UTF-8">
     <title>Статистика по вакансии</title>
-    <link rel="icon"  th:src="@{/images/ourbor.png}" />
+    <link rel="icon" th:src="@{/images/ourbor.png}"/>
     <!--    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />-->
     <style>
         body {
             background-color:#FFFFFF;
+            position: relative; /* Добавляем относительное позиционирование */
+            min-height: 100%; /* Минимальная высота равна высоте экрана */
             margin: 0;
+            padding-bottom: 120px;
             margin-bottom: 100px;
             color: #000;
             font-size: 15px;
             font-family: Arial, sans-serif;
-
         }
-
+        footer {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background: #007991; /* Цвет фона футера */
+            color: white; /* Цвет текста футера */
+            text-align: center; /* Выравнивание текста по центру */
+            padding: 10px 0; /* Отступы сверху и снизу */
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Тень над футером */
+        }
         header {
-            background-color: #cbe5f8;
-            text-align: center;
-            padding: 0;
+            background: linear-gradient(to right, #007991, #78ffd6); /* Градиентный фон */
+            color: white; /* Белый цвет текста */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень под заголовком */
+            padding: 20px 0; /* Отступы сверху и снизу */
         }
 
         header h1 {
-            font-size: 24px;
+            font-size: 20px;
             margin: 0;
         }
 
         header nav {
-
             display: flex;
             justify-content: left;
             align-items: center;
@@ -45,9 +57,21 @@
             margin: 0 10px;
         }
 
+        header h1, header h3 {
+            font-size: 20px; /* Увеличенный размер шрифта */
+            font-weight: bold; /* Жирный шрифт */
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Тень текста */
+        }
+
         header nav ul li a {
-            color: #555;
+            color: #fff; /* Белый цвет ссылок */
             text-decoration: none;
+            padding: 5px 10px; /* Отступы вокруг ссылок */
+            transition: color 0.3s; /* Плавное изменение цвета при наведении */
+        }
+        header nav ul li a:hover {
+            color: #000; /* Черный цвет текста при наведении */
         }
 
         main {
@@ -56,35 +80,7 @@
 
         h3 {
             text-align: center;
-            font-size: 20px;
-            margin-top:20px;
-            margin-bottom: 20px;
-        }
-
-
-        #id2 {
-            width: 25%;
-            border-collapse: collapse;
-            float: left;
-            margin:10px;
-            margin-right: 60px;
-        }
-
-        table th,
-        table td {
-            border: 1px solid #333;
-            padding: 3px;
-            border-color: inherit;
-            border-style:solid;
-        }
-
-        table th {
-            text-align: center;
-        }
-
-        table td {
-            text-align: left;
-            vertical-align: inherit;
+            font-size: 18px;
         }
 
         a{
@@ -92,18 +88,103 @@
         }
 
 
-        #pie {
+        thead{
+            border-collapse: collapse;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f8f8f8;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .blockContent {
+            padding-top: 30px;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .sidebar {
+            float: left;
+            width: 20%; /* Ширина боковой панели */
+            background-color: #fcfdff;
+            margin-top:10px;
+            padding: 5px;
+            box-sizing: border-box;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
-        #textVac{
-            padding-left: 10px;
-            background-color:#fsdfsd;
+        .main-content {
+            float: left;
+            width: 80%; /* Ширина основного контента */
+            padding: 10px;
+            box-sizing: border-box;
         }
+
+        select, button {
+            padding: 10px;
+            margin-top: 25px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #f2f2f2;
+        }
+        #pagination {
+            display: flex;
+            justify-content: center;
+            width: 90%; /* Подстроить под ширину таблицы */
+            margin: auto;
+        }
+        button {
+            flex-grow:4;
+            margin-top: 10px;
+        }
+
+        span{
+            margin-top: 20px;
+            text-align:center;
+            flex-grow: 1;
+        }
+
+
         /* Media queries */
 
         @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                float: none;
+            }
+
+            .main-content {
+                width: 100%;
+                float: none;
+            }
+            table, .blockContent {
+                width: 100%;
+            }
             header nav ul {
                 flex-direction: row;
             }
@@ -131,66 +212,200 @@
             <li><a href="http://localhost:8081/api/v1/plans">Посмотреть план изучения</a></li>
             <li><a href="http://localhost:8081/api/v1/tasks">Планировщик</a></li>
             <li><a href="http://localhost:8081/api/v1/questions">Вопросы</a></li>
+            <li><a href="http://localhost:8081/api/v1/questions">Личный кабинет</a></li>
+
         </ul>
     </nav>
 </header>
-
-
-
-<div >
-    <h3>Управление вопросами</h3>
-
-    <!-- Создание нового вопроса -->
-    <form th:action="@{/api/v1/questions/create}" method="post">
-        <h4>Название вопроса</h4>
-        <input type="text" placeholder="Название вопроса" name="titleQuestions" required>
-        <h4>Название темы</h4>
-        <input type="text" placeholder="Название темы" name="nameThemes" required>
-        <h4>Выберите тему</h4>
-        <select name="themeId">
-            <option th:each="theme : ${themes}" th:value="${theme.id}" th:text="${theme.name}"></option>
-        </select>
-        <h4>Ответ</h4>
-        <input type="text" placeholder="Ответ" name="answer" required>
-        <button type="submit">Создать</button>
-    </form>
-
-    <!-- Обновление вопроса -->
-    <form th:action="@{/api/v1/questions/update}" method="put">
-        <h4>Название вопроса</h4>
-        <input type="text" placeholder="Название вопроса" name="title" required>
-        <h4>Название темы</h4>
-        <input type="text" placeholder="Название темы" name="nameThemes" required>
-        <h4>Выберите тему</h4>
-        <select name="themeId">
-            <option th:each="theme : ${themes}" th:value="${theme.id}" th:text="${theme.name}"></option>
-        </select>
-        <h4>Ответ</h4>
-        <input type="text" placeholder="Ответ" name="answer" required>
-        <button type="submit">Обновить</button>
-    </form>
-</div>
-    <!-- Добавьте аналогичную форму для обновления -->
-
-    <!-- Удаление вопроса -->
-
-
-<!--<main th:if="${!admin}">-->
 <main>
-    <h3>Список всех вопросов</h3>
-    <table>
-        <tr>
-            <th>Title</th>
-            <th>Theme</th>
-            <th>Answer</th>
-        </tr>
-        <tr th:each="question : ${questions}">
-            <td th:text="${question.titleQuestions}">Sample Title</td>
-            <td th:text="${question.nameThemes}">Sample Theme</td>
-            <td th:text="${question.answer}">Sample Answer</td>
-        </tr>
-    </table>
+    <!-- Боковая панель для выбора темы -->
+    <div class="sidebar">
+        <h3>Фильтр тем:</h3>
+        <select id="themeSelect">
+            <option value="">-- Выберите тему --</option>
+            <option value="all">Все</option>
+            <!--            <option th:each="theme : ${themes}" th:value="${theme.id}" th:text="${theme.name}">Тема 1</option>-->
+        </select>
+        <button onclick="fetchQuestionsByTheme()">Применить фильтр</button>
+    </div>
+
+    <div class="main-content">
+        <h3>Вопросы с собеседований на Java Developer </h3>
+        <div class="blockContent">
+            <!--<main th:if="${!admin}">-->
+            <!--    <h3>Список всех вопросов</h3>-->
+            <table>
+                <thead>
+                <tr>
+                    <th>Тема</th>
+                    <th>Вопрос</th>
+                    <th>Ответ</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="question : ${questions}">
+                    <td th:text="${question.nameThemes}">Sample Theme</td>
+                    <td th:text="${question.titleQuestions}">Sample Title</td>
+                    <td th:text="${question.answer}">Sample Answer</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="pagination">
+            <button onclick="previousPage()">Предыдущая</button>
+            <span id="page-number">1</span>
+            <button onclick="nextPage()">Следующая</button>
+        </div>
+
+    </div>
 </main>
+<!--<footer>-->
+<!--    <p>&copy; 2024 OuroborosOdyssey</p>-->
+<!--</footer>-->
+<script>
+    let currentPage = 1;
+    const questionsPerPage = 50;
+
+    // Глобальная переменная для хранения всех вопросов
+    let allQuestions = [];
+
+    function nextPage() {
+        currentPage++;
+        displayQuestions();
+    }
+
+    function previousPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayQuestions();
+        }
+    }
+
+    function displayQuestions() {
+        const startIndex = (currentPage - 1) * questionsPerPage;
+        const endIndex = Math.min(startIndex + questionsPerPage, allQuestions.length);
+        const paginatedQuestions = allQuestions.slice(startIndex, endIndex);
+        updateTable(paginatedQuestions);
+
+        // Обновление состояния кнопок
+        document.querySelector('#pagination button[onclick="previousPage()"]').disabled = currentPage === 1;
+        document.querySelector('#pagination button[onclick="nextPage()"]').disabled = endIndex >= allQuestions.length;
+    }
+
+    function updateTable(questions) {
+        const tableBody = document.querySelector('table tbody');
+        tableBody.innerHTML = '';
+
+        if (!questions.length) {
+            tableBody.innerHTML = '<tr><td colspan="3">Вопросы не найдены.</td></tr>';
+        } else {
+            questions.forEach(question => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${question.nameThemes}</td>
+                <td>${question.titleQuestions}</td>
+                <td>${question.answer}</td>
+            `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        document.getElementById('page-number').textContent = currentPage;
+    }
 
 
+    // Обновите функцию populateQuestions, чтобы она вызывала displayQuestions
+    function populateQuestions(questions) {
+        allQuestions = [];
+        // Сохраняем все вопросы в глобальной переменной
+        allQuestions = questions;
+        // Вызываем displayQuestions для отображения первой страницы
+        displayQuestions();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchThemes();
+    });
+
+    function fetchThemes() {
+        fetch('http://localhost:8081/api/v1/themes/getALL')
+            .then(response => response.json())
+            .then(themes => {
+            const selectElement = document.getElementById('themeSelect');
+            themes.forEach(theme => {
+                const option = document.createElement('option');
+                option.value = theme.id;
+                option.textContent = theme.title;
+                selectElement.appendChild(option);
+            });
+        })
+            .catch(error => console.error('Error:', error));
+    }
+    // Функция для загрузки вопросов по выбранной теме
+    function fetchQuestionsByTheme() {
+        const themeIdString = document.getElementById('themeSelect').value;
+        let url = 'http://localhost:8081/api/v1/questions/';
+
+        if (themeIdString === 'all') {
+            url += 'getAll';
+        } else {
+            url += `getQuestionsThemes?themeId=${themeIdString}`;
+        }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(questions => populateQuestions(questions))
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Функция для заполнения таблицы вопросами
+    function populateQuestions(questions) {
+        const tableBody = document.querySelector('table tbody');
+        tableBody.innerHTML = ''; // Очистить текущие строки таблицы
+        questions.forEach(question => {
+            const row = `<tr>
+            <td>${question.nameThemes}</td>
+            <td>${question.titleQuestions}</td>
+            <td>${question.answer}</td>
+        </tr>`;
+            tableBody.innerHTML += row;
+        });
+    }
+
+</script>
 </body>
+
+
+<!--<div class="create">-->
+<!--    &lt;!&ndash; Создание нового вопроса &ndash;&gt;-->
+<!--    <form th:action="@{/api/v1/questions/create}" method="post">-->
+<!--        <h4>Название вопроса</h4>-->
+<!--        <input type="text" placeholder="Название вопроса" name="titleQuestions" required>-->
+<!--        <h4>Название темы</h4>-->
+<!--        <input type="text" placeholder="Название темы" name="nameThemes" required>-->
+<!--        <h4>Выберите тему</h4>-->
+<!--        <select name="themeId">-->
+<!--            <option th:each="theme : ${themes}" th:value="${theme.id}" th:text="${theme.name}"></option>-->
+<!--        </select>-->
+<!--        <h4>Ответ</h4>-->
+<!--        <input type="text" placeholder="Ответ" name="answer" required>-->
+<!--        <button type="submit">Создать</button>-->
+<!--    </form>-->
+<!--</div>-->
+<!--    <div class="update">-->
+
+<!--    &lt;!&ndash; Обновление вопроса &ndash;&gt;-->
+<!--    <form th:action="@{/api/v1/questions/update}" method="put">-->
+<!--        <h4>Название вопроса</h4>-->
+<!--        <input type="text" placeholder="Название вопроса" name="title" required>-->
+<!--        <h4>Название темы</h4>-->
+<!--        <input type="text" placeholder="Название темы" name="nameThemes" required>-->
+<!--        <h4>Выберите тему</h4>-->
+<!--        <select name="themeId">-->
+<!--            <option th:each="theme : ${themes}" th:value="${theme.id}" th:text="${theme.name}"></option>-->
+<!--        </select>-->
+<!--        <h4>Ответ</h4>-->
+<!--        <input type="text" placeholder="Ответ" name="answer" required>-->
+<!--        <button type="submit">Обновить</button>-->
+<!--    </form>-->
+<!--    </div>-->

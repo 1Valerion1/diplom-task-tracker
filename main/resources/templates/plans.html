@@ -15,20 +15,30 @@
       font-family: Arial, sans-serif;
 
     }
-
+    footer {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background: #007991; /* Цвет фона футера */
+      color: white; /* Цвет текста футера */
+      text-align: center; /* Выравнивание текста по центру */
+      padding: 10px 0; /* Отступы сверху и снизу */
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Тень над футером */
+    }
     header {
-      background-color: #cbe5f8;
-      text-align: center;
-      padding: 0;
+      background: linear-gradient(to right, #007991, #78ffd6); /* Градиентный фон */
+      color: white; /* Белый цвет текста */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень под заголовком */
+      padding: 20px 0; /* Отступы сверху и снизу */
     }
 
     header h1 {
-      font-size: 24px;
+      font-size: 20px;
       margin: 0;
     }
 
     header nav {
-
       display: flex;
       justify-content: left;
       align-items: center;
@@ -45,9 +55,21 @@
       margin: 0 10px;
     }
 
+    header h1, header h3 {
+      font-size: 20px; /* Увеличенный размер шрифта */
+      font-weight: bold; /* Жирный шрифт */
+      margin: 0;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Тень текста */
+    }
+
     header nav ul li a {
-      color: #555;
+      color: #fff; /* Белый цвет ссылок */
       text-decoration: none;
+      padding: 5px 10px; /* Отступы вокруг ссылок */
+      transition: color 0.3s; /* Плавное изменение цвета при наведении */
+    }
+    header nav ul li a:hover {
+      color: #000; /* Черный цвет текста при наведении */
     }
 
     main {
@@ -91,16 +113,6 @@
       color:black;
     }
 
-
-    #pie {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #textVac{
-      padding-left: 10px;
-      background-color:#fsdfsd;
-    }
     /* Media queries */
 
     @media (max-width: 768px) {
@@ -118,7 +130,28 @@
       display: block;
     }
 
+    /* Стили для карточек */
+    .card {
+      background: #fff;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
+    .card-header {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-content {
+      margin-bottom: 0.5rem;
+    }
+
+    .card-link {
+      color: #007991;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -131,9 +164,94 @@
       <li><a href="http://localhost:8081/api/v1/plans">Посмотреть план изучения</a></li>
       <li><a href="http://localhost:8081/api/v1/tasks">Планировщик</a></li>
       <li><a href="http://localhost:8081/api/v1/questions">Вопросы</a></li>
+      <li><a href="http://localhost:8081/api/v1/questions">Личный кабинет</a></li>
+
     </ul>
   </nav>
 </header>
 
+<main>
+  <div class="main-content">
+    <h3>План изучения</h3>
+    <!-- Контейнер для плана -->
+    <div id="plan-container">
+      <!-- Внутри тега <div id="plan-container"> добавьте следующий код -->
+      <div th:if="${plan != null}">
+        <div class="card">
+          <div class="card-header">План изучения для разработчика: <span th:text="${plan.developer}"></span></div>
+          <div class="card-content">
+            <p>Темы:</p>
+            <ul>
+              <li th:each="theme : ${plan.theme}">
+                <span th:text="${theme.title}">Java</span>:
+                <span th:text="${theme.details}">Синтаксис</span>
+                <!-- Ссылки и вопросы можно добавить аналогичным образом -->
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div th:if="${plan == null}">
+        <p>План изучения не найден.</p>
+      </div>
 
+    </div>
+
+  </div>
+</main>
+<!--<footer>-->
+<!--  <p>&copy; 2024 OuroborosOdyssey</p>-->
+<!--</footer>-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Функция для получения плана изучения по ID
+      function fetchPlan(id) {
+        console.log('Запрос к серверу с ID:', id);
+        fetch('http://localhost:8081/api/v1/plans/getOne?id=' + id)
+          .then(response => {
+          if (!response.ok) {
+            throw new Error('Ошибка запроса: ' + response.statusText);
+          }
+          return response.json();
+        })
+          .then(plan => {
+          // Обработка полученного плана
+          if (plan && plan.theme && plan.theme.length > 0) {
+            const planContainer = document.getElementById('plan-container');
+            const themesHtml = plan.theme.map(theme => {
+              return `<li>${theme.title}: ${theme.details}</li>`;
+            }).join('');
+            planContainer.innerHTML = `
+            <div class="card">
+              <div class="card-header">План изучения для разработчика: ${plan.developer}</div>
+              <div class="card-content">
+                <p>Темы:</p>
+                <ul>${themesHtml}</ul>
+              </div>
+            </div>
+          `;
+          } else {
+            // Если план не найден
+            planContainer.innerHTML = '<p>План изучения не найден.</p>';
+          }
+        })
+          .catch(error => {
+          console.error('Ошибка при получении плана изучения:', error);
+          document.getElementById('plan-container').innerHTML = '<p>Ошибка при получении плана изучения.</p>';
+        });
+      }
+
+      // Вызов функции fetchPlan с ID плана, который вы хотите получить
+      fetchPlan(2); // Замените на актуальный ID
+    });
+
+</script>
 </body>
+<!--//      , {-->
+<!--//        method: 'GET',-->
+<!--//        headers: {-->
+<!--//          'Content-Type': 'application/json',-->
+<!--//          'Authorization': 'Bearer ваш_токен_здесь' // Замените на ваш токен-->
+<!--//        }-->
+<!--//      }-->
