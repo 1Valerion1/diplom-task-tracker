@@ -2,6 +2,7 @@ package edu.pet.tasktrackerapi.api.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Theme implements Serializable {
     private Long id;
     @Column
     private String title;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String details;
     @Column
     private String links;

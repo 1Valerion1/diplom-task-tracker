@@ -5,14 +5,19 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@SuperBuilder
 @Table(name = "subtasks")
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
-public class Subtask extends AbstractTask {
+public class Subtask extends AbstractTask implements Serializable {
     // будет списком задач в задаче
 
     @ToString.Exclude

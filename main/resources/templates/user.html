@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta content="text/html"; charset="UTF-8">
+    <meta content="text/html" charset="UTF-8">
     <title>Статистика по вакансии</title>
-    <link rel="icon"  th:src="@{/images/ourbor.png}" />
-    <!--    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />-->
+    <!--  <link rel="icon"  th:src="@{/images/ourbor.png}" />-->
     <style>
         body {
             background-color:#FFFFFF;
             margin: 0;
             margin-bottom: 100px;
             color: #000;
-            font-size: 15px;
+            font-size: 16px;
             font-family: Arial, sans-serif;
 
         }
@@ -113,16 +112,6 @@
             color:black;
         }
 
-
-        #pie {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #textVac{
-            padding-left: 10px;
-            background-color:#fsdfsd;
-        }
         /* Media queries */
 
         @media (max-width: 768px) {
@@ -140,26 +129,38 @@
             display: block;
         }
 
-
     </style>
 </head>
 <body>
 <header>
     <nav>
         <ul>
-            <!--            <li><svg><img th:src="@{/images/ourbor.png}"></svg></li>-->
             <li><h3 href="/">OuroborosOdyssey</h3></li>
             <li><a href="http://localhost:8081/api/v1/statistics">Требования на вакансии</a></li>
             <li><a href="http://localhost:8081/api/v1/plans">Посмотреть план изучения</a></li>
             <li><a href="http://localhost:8081/api/v1/tasks">Планировщик</a></li>
             <li><a href="http://localhost:8081/api/v1/questions">Вопросы</a></li>
-            <li><a href="http://localhost:8081/api/v1/questions">Личный кабинет</a></li>
+            <li><a href="http://localhost:8081/api/v1/autorize">Личный кабинет</a></li>
 
         </ul>
     </nav>
 </header>
+
 <main>
+    <!-- profile.html -->
+    <form action="#" th:action="@{/api/v1/auth/updateProfile}" method="post">
+        <input type="text" name="username" th:value="${user.username}" required>
+        <input type="email" name="email" th:value="${user.email}">
+        <button type="submit">Update Profile</button>
+    </form>
 
 </main>
 
+
+<script>
+
+</script>
+
+
 </body>
+</html>

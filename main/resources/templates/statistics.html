@@ -194,6 +194,21 @@
 <!--</footer>-->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
+    function fetchWithToken(url, options = {}) {
+        // Получаем токен из sessionStorage
+        const token = sessionStorage.getItem('token');
+
+        // Добавляем заголовок Authorization, если токен существует
+        if (token) {
+            options.headers = {
+                ...options.headers,
+                'Authorization': 'Bearer ' + token
+            };
+        }
+
+        // Выполняем запрос с добавленным токеном
+        return fetch(url, options);
+    }
 
     const tableBody = document.querySelector('tbody');
     const rows = tableBody.querySelectorAll('tr');

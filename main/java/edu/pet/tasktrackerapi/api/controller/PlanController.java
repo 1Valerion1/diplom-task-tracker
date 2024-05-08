@@ -66,4 +66,6 @@ public class PlanController {
         model.addAttribute("plans", plansService.getPlanId(2l));
         return "plans";
     }
+
+
 }

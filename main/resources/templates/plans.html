@@ -1,257 +1,314 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta content="text/html"; charset="UTF-8">
-  <title>Статистика по вакансии</title>
-  <link rel="icon"  th:src="@{/images/ourbor.png}" />
-  <!--    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />-->
-  <style>
-    body {
-      background-color:#FFFFFF;
-      margin: 0;
-      margin-bottom: 100px;
-      color: #000;
-      font-size: 15px;
-      font-family: Arial, sans-serif;
+    <meta content="text/html" charset="UTF-8">
+    <title>Статистика по вакансии</title>
+    <!--  <link rel="icon"  th:src="@{/images/ourbor.png}" />-->
+    <style>
+        body {
+            background-color:#FFFFFF;
+            margin: 0;
+            margin-bottom: 100px;
+            color: #000;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
 
-    }
-    footer {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      background: #007991; /* Цвет фона футера */
-      color: white; /* Цвет текста футера */
-      text-align: center; /* Выравнивание текста по центру */
-      padding: 10px 0; /* Отступы сверху и снизу */
-      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Тень над футером */
-    }
-    header {
-      background: linear-gradient(to right, #007991, #78ffd6); /* Градиентный фон */
-      color: white; /* Белый цвет текста */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень под заголовком */
-      padding: 20px 0; /* Отступы сверху и снизу */
-    }
+        }
+        footer {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background: #007991; /* Цвет фона футера */
+            color: white; /* Цвет текста футера */
+            text-align: center; /* Выравнивание текста по центру */
+            padding: 10px 0; /* Отступы сверху и снизу */
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Тень над футером */
+        }
+        header {
+            background: linear-gradient(to right, #007991, #78ffd6); /* Градиентный фон */
+            color: white; /* Белый цвет текста */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень под заголовком */
+            padding: 20px 0; /* Отступы сверху и снизу */
+        }
 
-    header h1 {
-      font-size: 20px;
-      margin: 0;
-    }
+        header h1 {
+            font-size: 20px;
+            margin: 0;
+        }
 
-    header nav {
-      display: flex;
-      justify-content: left;
-      align-items: center;
-    }
+        header nav {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+        }
 
-    header nav ul {
-      list-style-type: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+        header nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    header nav ul li {
-      margin: 0 10px;
-    }
+        header nav ul li {
+            margin: 0 10px;
+        }
 
-    header h1, header h3 {
-      font-size: 20px; /* Увеличенный размер шрифта */
-      font-weight: bold; /* Жирный шрифт */
-      margin: 0;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Тень текста */
-    }
+        header h1, header h3 {
+            font-size: 20px; /* Увеличенный размер шрифта */
+            font-weight: bold; /* Жирный шрифт */
+            margin: 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Тень текста */
+        }
 
-    header nav ul li a {
-      color: #fff; /* Белый цвет ссылок */
-      text-decoration: none;
-      padding: 5px 10px; /* Отступы вокруг ссылок */
-      transition: color 0.3s; /* Плавное изменение цвета при наведении */
-    }
-    header nav ul li a:hover {
-      color: #000; /* Черный цвет текста при наведении */
-    }
+        header nav ul li a {
+            color: #fff; /* Белый цвет ссылок */
+            text-decoration: none;
+            padding: 5px 10px; /* Отступы вокруг ссылок */
+            transition: color 0.3s; /* Плавное изменение цвета при наведении */
+        }
+        header nav ul li a:hover {
+            color: #000; /* Черный цвет текста при наведении */
+        }
 
-    main {
-      padding: 10px;
-    }
+        main {
+            padding: 10px;
+        }
 
-    h3 {
-      text-align: center;
-      font-size: 20px;
-      margin-top:20px;
-      margin-bottom: 20px;
-    }
+        h3 {
+            text-align: center;
+            font-size: 20px;
+            margin-top:20px;
+            margin-bottom: 20px;
+        }
 
 
-    #id2 {
-      width: 25%;
-      border-collapse: collapse;
-      float: left;
-      margin:10px;
-      margin-right: 60px;
-    }
+        #id2 {
+            width: 25%;
+            border-collapse: collapse;
+            float: left;
+            margin:10px;
+            margin-right: 60px;
+        }
 
-    table th,
-    table td {
-      border: 1px solid #333;
-      padding: 3px;
-      border-color: inherit;
-      border-style:solid;
-    }
+        table th,
+        table td {
+            border: 1px solid #333;
+            padding: 3px;
+            border-color: inherit;
+            border-style:solid;
+        }
 
-    table th {
-      text-align: center;
-    }
+        table th {
+            text-align: center;
+        }
 
-    table td {
-      text-align: left;
-      vertical-align: inherit;
-    }
+        table td {
+            text-align: left;
+            vertical-align: inherit;
+        }
 
-    a{
-      color:black;
-    }
+        a{
+            color:black;
+        }
 
-    /* Media queries */
+        /* Media queries */
 
-    @media (max-width: 768px) {
-      header nav ul {
-        flex-direction: row;
-      }
+        @media (max-width: 768px) {
+            header nav ul {
+                flex-direction: row;
+            }
 
-      header nav ul li {
-        margin-bottom: 5px;
-      }
-    }
-    svg {
-      width: 30px;
-      margin: 0 auto;
-      display: block;
-    }
+            header nav ul li {
+                margin-bottom: 5px;
+            }
+        }
+        svg {
+            width: 30px;
+            margin: 0 auto;
+            display: block;
+        }
 
-    /* Стили для карточек */
-    .card {
-      background: #fff;
-      margin-bottom: 1rem;
-      padding: 0.5rem;
-      border-radius: 0.25rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        /* Стили для карточек */
+        .card {
+            background: #fff;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 600px;
+        }
 
-    .card-header {
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
+        .card-header {
+            width: 600px;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
 
-    .card-content {
-      margin-bottom: 0.5rem;
-    }
+        .card-content {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .card-content p {
+            padding-top:8px;
+            padding:5px;
+            text-indent: 20px; /* Отступ первой строки в абзаце */
+            text-align: justify;
+            margin-top: 20px;
+            margin-bottom: 20px; /* Отступ снизу после абзаца */
 
-    .card-link {
-      color: #007991;
-      text-decoration: none;
-    }
-  </style>
+        }
+
+
+        .long-text {
+            column-count: 3;
+            column-gap: 40px;
+        }
+
+        .card-link {
+            color: #007991;
+            text-decoration: none;
+        }
+
+    </style>
 </head>
 <body>
 <header>
-  <nav>
-    <ul>
-      <!--            <li><svg><img th:src="@{/images/ourbor.png}"></svg></li>-->
-      <li><h3 href="/">OuroborosOdyssey</h3></li>
-      <li><a href="http://localhost:8081/api/v1/statistics">Требования на вакансии</a></li>
-      <li><a href="http://localhost:8081/api/v1/plans">Посмотреть план изучения</a></li>
-      <li><a href="http://localhost:8081/api/v1/tasks">Планировщик</a></li>
-      <li><a href="http://localhost:8081/api/v1/questions">Вопросы</a></li>
-      <li><a href="http://localhost:8081/api/v1/questions">Личный кабинет</a></li>
+    <nav>
+        <ul>
+            <li><h3 href="/">OuroborosOdyssey</h3></li>
+            <li><a href="http://localhost:8081/api/v1/statistics">Требования на вакансии</a></li>
+            <li><a href="http://localhost:8081/api/v1/plans">Посмотреть план изучения</a></li>
+            <li><a href="http://localhost:8081/api/v1/tasks">Планировщик</a></li>
+            <li><a href="http://localhost:8081/api/v1/questions">Вопросы</a></li>
+            <li><a href="http://localhost:8081/api/v1/auth">Личный кабинет</a></li>
 
-    </ul>
-  </nav>
+        </ul>
+    </nav>
 </header>
 
 <main>
-  <div class="main-content">
-    <h3>План изучения</h3>
-    <!-- Контейнер для плана -->
-    <div id="plan-container">
-      <!-- Внутри тега <div id="plan-container"> добавьте следующий код -->
-      <div th:if="${plan != null}">
-        <div class="card">
-          <div class="card-header">План изучения для разработчика: <span th:text="${plan.developer}"></span></div>
-          <div class="card-content">
-            <p>Темы:</p>
-            <ul>
-              <li th:each="theme : ${plan.theme}">
-                <span th:text="${theme.title}">Java</span>:
-                <span th:text="${theme.details}">Синтаксис</span>
-                <!-- Ссылки и вопросы можно добавить аналогичным образом -->
-              </li>
-            </ul>
-          </div>
+    <div class="main-content">
+        <h3>План изучения</h3>
+        <div id="plan-container">
+            <div th:if="${plans != null}">
+                <div class="card">
+                    <div class="card-header">План изучения для разработчика: <span th:text="${plans.developer}"></span>
+                    </div>
+                    <div class="card-content">
+                        <p>Темы:</p>
+                        <ul>
+                            <li th:each="theme : ${plans.theme}">
+                                <div class="card">
+                                    <div class="card-header" th:text="${theme.title}"></div>
+                                    <div class="card-content">
+                                        <p>Описание:</p>
+                                        <p th:text="${theme.details}"></p>
+                                        <p>Ссылки: <a th:href="${theme.links}" class="card-link"
+                                                      target="_blank">Перейти</a></p>
+                                        <p>Вопросы:</p>
+                                        <ul>
+                                            <li th:each="question : ${theme.questionsList}"
+                                                th:text="${question.titleQuestions}"></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div th:if="${plan == null}">
-        <p>План изучения не найден.</p>
-      </div>
-
     </div>
-
-  </div>
 </main>
-<!--<footer>-->
-<!--  <p>&copy; 2024 OuroborosOdyssey</p>-->
-<!--</footer>-->
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Функция для получения плана изучения по ID
-      function fetchPlan(id) {
-        console.log('Запрос к серверу с ID:', id);
-        fetch('http://localhost:8081/api/v1/plans/getOne?id=' + id)
-          .then(response => {
-          if (!response.ok) {
-            throw new Error('Ошибка запроса: ' + response.statusText);
-          }
-          return response.json();
-        })
-          .then(plan => {
-          // Обработка полученного плана
-          if (plan && plan.theme && plan.theme.length > 0) {
-            const planContainer = document.getElementById('plan-container');
-            const themesHtml = plan.theme.map(theme => {
-              return `<li>${theme.title}: ${theme.details}</li>`;
-            }).join('');
-            planContainer.innerHTML = `
-            <div class="card">
-              <div class="card-header">План изучения для разработчика: ${plan.developer}</div>
-              <div class="card-content">
-                <p>Темы:</p>
-                <ul>${themesHtml}</ul>
-              </div>
-            </div>
-          `;
-          } else {
-            // Если план не найден
-            planContainer.innerHTML = '<p>План изучения не найден.</p>';
-          }
-        })
-          .catch(error => {
-          console.error('Ошибка при получении плана изучения:', error);
-          document.getElementById('plan-container').innerHTML = '<p>Ошибка при получении плана изучения.</p>';
-        });
-      }
 
-      // Вызов функции fetchPlan с ID плана, который вы хотите получить
-      fetchPlan(2); // Замените на актуальный ID
+
+
+        function fetchPlan(id) {
+            console.log('Запрос к серверу с ID:', id);
+            fetch('http://localhost:8081/api/v1/plans/getOne?id=' + id)
+                .then(response => response.json())
+                .then(data => {
+                if (!data || !data.plans) {
+                    console.error('Не удалось получить данные или данные не содержат ожидаемых полей');
+                    return;
+                }
+
+                const planContainer = document.getElementById('plan-container');
+                const planHtml = createPlanHtml(data);
+                planContainer.innerHTML = planHtml;
+            })
+                .catch(error => {
+                console.error('Ошибка при получении данных плана:', error);
+            });
+        }
+
+        function createPlanHtml(plan) {
+            const themesHtml = plan.theme.map(theme => `
+  <li>
+    <div class="card">
+      <div class="card-header">${theme.title}</div>
+      <div class="card-content">
+      <p>Описание:</p>
+        ${formatDetails(theme.details)} // Здесь применяем форматирование
+        <p>Ссылки: <a href="${theme.links}" class="card-link" target="_blank">Перейти</a></p>
+        <p>Вопросы:</p>
+        <ul>
+          ${theme.questionsList.map(question => `<li>${question.titleQuestions}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  </li>
+`).join('');
+
+            return `
+      <div class="card">
+        <div class="card-header">План изучения для разработчика: <span>${plans.developer}</span></div>
+        <div class="card-content">
+          <p>Темы:</p>
+          <ul>${themesHtml}</ul>
+        </div>
+      </div>
+    `;
+        }
+
+        fetchPlan(2);
     });
 
+    function formatDetails(details) {
+        const sentences = details.match(/(?<!\b\p{L}\.)(?<=\.|\?|\!)\s/gu);
+        console.log(sentences); // Посмотреть, что захватывает regex
+
+        const paragraphs = [];
+
+        while (sentences.length > 0) {
+            paragraphs.push(sentences.splice(0, 6).join(' '));
+        }
+
+        const fullText = paragraphs.map(paragraph => `<p style="text-indent: 20px;">${paragraph.trim()}</p>`).join('\n');
+
+        if (details.length > 10) { // Если текст длиннее некоторого предела, добавляем кнопку для разворачивания
+            return `
+            <div class="collapsible-content">
+                <div class="summary">${paragraphs.slice(0, 3).join('\n')}</div>
+                <div class="full-text hidden">${fullText}</div>
+                <button onclick="this.previousElementSibling.classList.toggle('hidden'); this.textContent = this.previousElementSibling.classList.contains('hidden') ? 'Показать больше' : 'Показать меньше';">Показать больше</button>
+            </div>
+        `;
+        }
+
+        return fullText;
+    }
 </script>
+
+
 </body>
-<!--//      , {-->
-<!--//        method: 'GET',-->
-<!--//        headers: {-->
-<!--//          'Content-Type': 'application/json',-->
-<!--//          'Authorization': 'Bearer ваш_токен_здесь' // Замените на ваш токен-->
-<!--//        }-->
-<!--//      }-->
+</html>

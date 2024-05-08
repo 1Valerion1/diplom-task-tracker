@@ -1,6 +1,7 @@
 package edu.pet.tasktrackerapi.auth.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import edu.pet.tasktrackerapi.api.model.User;
 import edu.pet.tasktrackerapi.auth.dto.AuthenticationRequest;
 import edu.pet.tasktrackerapi.auth.dto.AuthenticationResponse;
 import edu.pet.tasktrackerapi.auth.dto.RegisterRequest;
@@ -16,12 +17,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 @Tag(name = "JWT-security", description = "Methods for registration and authentication")
@@ -131,6 +132,18 @@ public class AuthenticationController {
         }
         return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest));
 
+    }
+
+    @PostMapping("/updateProfile")
+    public ResponseEntity<?> updateProfile(@AuthenticationPrincipal User currentUser,
+                                           @RequestParam String newUsername, @RequestParam String newEmail) {
+        // Обновление данных пользователя
+        return ResponseEntity.ok("Profile updated successfully");
+    }
+
+    @GetMapping
+    public String showAutorize(Model model) {
+        return "autorize";
     }
 }
 

@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface SubtaskRepository extends JpaRepository<Subtask, Long> {
    // List<Subtask> getSubtaskByTasks_Id(UUID id);
 
-    void deleteTaskById(UUID uuid);
+    void deleteTaskById(Long uuid);
 
     int countSubtasksByTaskAndCompleted(Task task, boolean completed);
 
@@ -32,7 +32,7 @@ public interface SubtaskRepository extends JpaRepository<Subtask, Long> {
     void updateCompleted(@Param("id") UUID uuid, @Param("title") String title, @Param("details") String details);
 
 
-    boolean existsByTaskAndId(Task task, UUID uuid);
+    boolean existsByTaskAndId(Task task, Long uuid);
 
 
 }

@@ -2,6 +2,7 @@ package edu.pet.tasktrackerapi.api.dto;
 
 import edu.pet.tasktrackerapi.api.model.Enum.Priorities;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -24,5 +25,7 @@ public class NewTaskRequest implements Serializable {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Priorities priorities;
+
+    private boolean completed;
 
 }

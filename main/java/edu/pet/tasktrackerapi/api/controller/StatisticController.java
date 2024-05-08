@@ -7,6 +7,7 @@ import edu.pet.tasktrackerapi.api.model.VacancySkills;
 import edu.pet.tasktrackerapi.api.service.HHService;
 import edu.pet.tasktrackerapi.api.service.VacancyService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class StatisticController {
     private HHService hhService;
     @Autowired
     private VacancyService vacancyService;
-
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping(value = "/updateData", produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView getVacancyJava() {
         String searchQuery = "Java";
@@ -80,6 +81,7 @@ public class StatisticController {
     }
 
     @GetMapping(value = "/updateData", produces = MediaType.APPLICATION_JSON_VALUE)
+    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting Vacansy start update data")
     public ResponseEntity getVacancyJavJson() {
         String searchQuery = "Java";
@@ -128,6 +130,7 @@ public class StatisticController {
     }
 
     @GetMapping(value = "/getStatistics")
+    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting Vacansy all Skills info")
     public ResponseEntity<List<VacancySkills>> getStatistic(){
 
@@ -135,11 +138,13 @@ public class StatisticController {
     }
 
     @GetMapping(value = "/getVacansy")
+    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting Vacansy all info")
     public ResponseEntity<List<Vacancy>> getInfo(){
 
         return new ResponseEntity<>(vacancyService.getallData(),HttpStatus.OK);
     }
+    @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping
     public String showStatistics(Model model) {
         model.addAttribute("vacancies", vacancyService.getallData());
