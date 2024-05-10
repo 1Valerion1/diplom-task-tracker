@@ -6,19 +6,26 @@
     <link rel="icon" th:src="@{/images/ourbor.png}"/>
     <!--    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />-->
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
         body {
             background-color:#FFFFFF;
-            position: relative; /* Добавляем относительное позиционирование */
-            min-height: 100%; /* Минимальная высота равна высоте экрана */
             margin: 0;
-            padding-bottom: 120px;
             margin-bottom: 100px;
             color: #000;
-            font-size: 15px;
+            font-size: 16px;
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+
+        }
+        main {
+            flex: 1;
         }
         footer {
-            position: absolute;
+            position: relative;
             left: 0;
             bottom: 0;
             width: 100%;
@@ -207,7 +214,7 @@
     <nav>
         <ul>
             <!--            <li><svg><img th:src="@{/images/ourbor.png}"></svg></li>-->
-            <li><h3 href="/">OuroborosOdyssey</h3></li>
+            <li><h3><a href="http://localhost:8081/api/v1/ouroboros">OuroborosOdyssey</a></h3></li>
             <li><a href="http://localhost:8081/api/v1/statistics">Требования на вакансии</a></li>
             <li><a href="http://localhost:8081/api/v1/plans">Посмотреть план изучения</a></li>
             <li><a href="http://localhost:8081/api/v1/tasks">Планировщик</a></li>
@@ -259,9 +266,10 @@
 
     </div>
 </main>
-<!--<footer>-->
-<!--    <p>&copy; 2024 OuroborosOdyssey</p>-->
-<!--</footer>-->
+<footer>
+    <p id="foot">© 2024 OuroborosOdyssey. Все права защищены.</p>
+</footer>
+
 <script>
     let currentPage = 1;
     const questionsPerPage = 50;

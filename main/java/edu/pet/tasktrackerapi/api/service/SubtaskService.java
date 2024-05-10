@@ -1,15 +1,18 @@
 package edu.pet.tasktrackerapi.api.service;
 
 import edu.pet.tasktrackerapi.api.dto.NewTaskRequest;
+import edu.pet.tasktrackerapi.api.dto.SubtaskDTO;
 import edu.pet.tasktrackerapi.api.model.Subtask;
 import edu.pet.tasktrackerapi.api.model.Task;
-import edu.pet.tasktrackerapi.api.model.User;
 import edu.pet.tasktrackerapi.exception.NotFoundException;
 import edu.pet.tasktrackerapi.repository.SubtaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -31,17 +34,24 @@ public class SubtaskService {
 
         return subtaskRepository.save(newTask).getId();
     }
-//
-//    public List<SubtaskDTO> getUsersTasksDto(Task task){
-//        System.out.println(getTasksSubtasksEntities(task));
-//        return modelMapper.map(
-//                getTasksSubtasksEntities(task),
-//                new TypeToken<List<SubtaskDTO>>(){}.getType()
-//        );
-//    }
-//    public List<Subtask> getTasksSubtasksEntities(Task task){
-//        return subtaskRepository.getSubtaskByTasks_Id(task.getId());
-//    }
+
+    public List<Subtask> getSubtaskAll(){
+
+        return subtaskRepository.findAll();
+    }
+
+    public List<SubtaskDTO> getSubtask(Task task){
+        System.out.println(getTasksSubtasksEntities(task));
+        return modelMapper.map(
+                getTasksSubtasksEntities(task),
+                new TypeToken<List<SubtaskDTO>>(){}.getType()
+        );
+    }
+    public List<Subtask> getTasksSubtasksEntities(Task task){
+        return subtaskRepository.getSubtasksByTask_Id(task.getId());
+    }
+
+
 //
 //    @Transactional
 //    public void updateTaskIfBelongsToUser(Task task, SubtaskDTO taskDto) {
@@ -71,14 +81,17 @@ public class SubtaskService {
 //    protected void updateCompletedTask(SubtaskDTO subtask){
 //        subtaskRepository.updateCompleted(subtask.getId(), subtask.getTitle(), subtask.getDetails());
 //    }
-//
-//
+
+
+    // Помни что если у подзадачи есть id, то его надо тоже учитвывать.
     @Transactional
     public void deleteSubtask(Task task, Long uuid){
-        if (subtaskRepository.existsByTaskAndId(task, uuid)){
+        if (subtaskRepository.existsByTaskIdAndId(task.getId(), uuid)) {
             deleteTaskByUUID(uuid);
+            System.out.println("Subtask deleted successfully: " + uuid);
         } else {
-            throw new NotFoundException();
+            System.out.println("Subtask not found: " + uuid);
+            throw new NotFoundException();//"Subtask not found"
         }
     }
     protected void deleteTaskByUUID(Long uuid){

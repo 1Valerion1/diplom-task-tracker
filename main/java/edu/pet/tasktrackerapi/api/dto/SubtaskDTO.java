@@ -10,27 +10,27 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
+@NoArgsConstructor
 @Data
-@RequiredArgsConstructor
+        //@RequiredArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Information about subtask is task")
 public class SubtaskDTO implements Serializable  {
 
-    private UUID id; //Long
+    private Long id;
     @NotBlank
     private String title;
     @NotNull
     private String details;
     @Column
     @Enumerated(EnumType.STRING)
-    private final Priorities priorities;
-
-    private List<Subtask> subtasks;
+    private  Priorities priorities;
 
     private boolean completed;
 }

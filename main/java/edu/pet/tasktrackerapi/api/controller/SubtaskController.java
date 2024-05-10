@@ -2,7 +2,9 @@ package edu.pet.tasktrackerapi.api.controller;
 
 
 import edu.pet.tasktrackerapi.api.dto.NewTaskRequest;
+import edu.pet.tasktrackerapi.api.dto.SubtaskDTO;
 import edu.pet.tasktrackerapi.api.dto.TaskDto;
+import edu.pet.tasktrackerapi.api.model.Subtask;
 import edu.pet.tasktrackerapi.api.model.Task;
 import edu.pet.tasktrackerapi.api.model.User;
 import edu.pet.tasktrackerapi.api.service.SubtaskService;
@@ -28,20 +30,30 @@ public class SubtaskController {
 
     private final SubtaskService subtaskService;
 //
-//    @GetMapping(produces = "application/json" , value = "/getAll")
-//    @SecurityRequirement(name = "Bearer Authentication")
-//    @Operation(description = "Getting list of tasks")
-//    public ResponseEntity<List<TaskDto>> getSubtasks(){
-//
-//        System.out.println(subtaskService.getUsersTasksDto());
-//
-//        return ResponseEntity.ok(subtaskService.getUsersTasksDto());
-//    }
+    @GetMapping(produces = "application/json" , value = "/getAll")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Operation(description = "Getting all list of subtasks")
+    public ResponseEntity<List<Subtask>> getSubtasksAll(){
+
+        System.out.println(subtaskService.getSubtaskAll());
+
+        return ResponseEntity.ok(subtaskService.getSubtaskAll());
+    }
+
+    @GetMapping(produces = "application/json" , value = "/getOne")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Operation(description = "Getting list of subtasks")
+    public ResponseEntity<List<SubtaskDTO>> getSubtasks(Task task){
+
+        System.out.println(subtaskService.getSubtask(task));
+
+        return ResponseEntity.ok(subtaskService.getSubtask(task));
+    }
 
     @PostMapping(produces = "application/json" , value = "/create")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Creating new task")
-    public ResponseEntity<Long> createTasks(@AuthenticationPrincipal Task task, @RequestBody @Valid NewTaskRequest newTaskRequest){
+    public ResponseEntity<Long> createSubtasks(@AuthenticationPrincipal Task task, @RequestBody @Valid NewTaskRequest newTaskRequest){
 
         Long taskId = subtaskService.createSubtask(task, newTaskRequest);
 
@@ -49,21 +61,21 @@ public class SubtaskController {
     }
 
 
-
+////
 //    @PutMapping(value = "/update", produces = "application/json")
 //    @SecurityRequirement(name = "Bearer Authentication")
-//    @Operation(description = "Updating existing task")
-//    public ResponseEntity<TaskDto> updateTask(@AuthenticationPrincipal User user, @RequestBody @Valid TaskDto taskDto){
+//    @Operation(description = "Updating existing subtask")
+//    public ResponseEntity<TaskDto> updateSubtask(@AuthenticationPrincipal User user, @RequestBody @Valid TaskDto taskDto){
 //
 //        subtaskService.updateTaskIfBelongsToUser(user, taskDto);
 //
 //        return ResponseEntity.ok(taskDto);
 //    }
-//
+
     @DeleteMapping(path = "/delete/{uuid}", produces = "application/json")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Delete task by id")
-    public ResponseEntity<Long> deleteTask(@AuthenticationPrincipal Task task, @PathVariable Long uuid){
+    public ResponseEntity<Long> deleteSubtask(@AuthenticationPrincipal Task task, @PathVariable Long uuid){
 
         subtaskService.deleteSubtask(task, uuid);
 

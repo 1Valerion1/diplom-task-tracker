@@ -6,16 +6,34 @@
     <link rel="icon" th:src="@{/images/ourbor.png}"/>
     <!--    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />-->
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
         body {
             background-color:#FFFFFF;
+            margin: 0;
             margin-bottom: 100px;
             color: #000;
-            font-size: 15px;
+            font-size: 16px;
             font-family: Arial, sans-serif;
-            position: relative; /* Добавляем относительное позиционирование */
-            min-height: 100%; /* Минимальная высота равна высоте экрана */
-            margin: 0;
-            padding-bottom: 120px;
+            display: flex;
+            flex-direction: column;
+
+        }
+        main {
+            flex: 1;
+        }
+        footer {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background: #007991; /* Цвет фона футера */
+            color: white; /* Цвет текста футера */
+            text-align: center; /* Выравнивание текста по центру */
+            padding: 10px 0; /* Отступы сверху и снизу */
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Тень над футером */
         }
 
 
@@ -151,7 +169,7 @@
     <nav>
         <ul>
             <!--            <li><svg><img th:src="@{/images/ourbor.png}"></svg></li>-->
-            <li><h3 href="/">OuroborosOdyssey</h3></li>
+            <li><h3><a href="http://localhost:8081/api/v1/ouroboros">OuroborosOdyssey</a></h3></li>
             <li><a href="http://localhost:8081/api/v1/statistics">Требования на вакансии</a></li>
             <li><a href="http://localhost:8081/api/v1/plans">Посмотреть план изучения</a></li>
             <li><a href="http://localhost:8081/api/v1/tasks">Планировщик</a></li>
@@ -189,9 +207,10 @@
         <canvas id="myChart"></canvas>
     </div>
 </main>
-<!--<footer>-->
-<!--    <p>&copy; 2024 OuroborosOdyssey</p>-->
-<!--</footer>-->
+<footer>
+    <p id="foot">© 2024 OuroborosOdyssey. Все права защищены.</p>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
     function fetchWithToken(url, options = {}) {

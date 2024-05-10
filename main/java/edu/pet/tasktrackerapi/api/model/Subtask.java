@@ -1,5 +1,6 @@
 package edu.pet.tasktrackerapi.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
@@ -21,6 +22,7 @@ public class Subtask extends AbstractTask implements Serializable {
     // будет списком задач в задаче
 
     @ToString.Exclude
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     private Task task;
 }

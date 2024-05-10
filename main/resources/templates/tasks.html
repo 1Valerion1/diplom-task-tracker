@@ -2,21 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta content="text/html"; charset="UTF-8">
-    <title>Статистика по вакансии</title>
+    <title>Список задач</title>
     <link rel="icon"  th:src="@{/images/ourbor.png}" />
     <!--    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />-->
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
         body {
             background-color:#FFFFFF;
             margin: 0;
             margin-bottom: 100px;
             color: #000;
-            font-size: 15px;
+            font-size: 16px;
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
 
         }
+        main {
+            flex: 1;
+        }
         footer {
-            position: absolute;
+            position: relative;
             left: 0;
             bottom: 0;
             width: 100%;
@@ -147,8 +156,7 @@
 <header>
     <nav>
         <ul>
-            <!--            <li><svg><img th:src="@{/images/ourbor.png}"></svg></li>-->
-            <li><h3 href="/">OuroborosOdyssey</h3></li>
+            <li><h3><a href="http://localhost:8081/api/v1/ouroboros">OuroborosOdyssey</a></h3></li>
             <li><a href="http://localhost:8081/api/v1/statistics">Требования на вакансии</a></li>
             <li><a href="http://localhost:8081/api/v1/plans">Посмотреть план изучения</a></li>
             <li><a href="http://localhost:8081/api/v1/tasks">Планировщик</a></li>
@@ -159,7 +167,60 @@
     </nav>
 </header>
 <main>
-
+    <h2>Список задач</h2>
+    <div th:if="${not #lists.isEmpty(tasks)}">
+        <ul>
+            <li th:each="task : ${tasks}">
+                <!-- Форма для обновления задачи -->
+                <form th:action="@{/api/v1/tasks/update}" method="post">
+                    <input type="hidden" th:value="${task.id}" name="id"/>
+                    <input type="text" th:value="${task.title}" name="title"/>
+                    <textarea name="details" th:text="${task.details}">Описание</textarea>
+                    <!-- Добавьте здесь другие поля, если необходимо -->
+                    <button type="submit">Сохранить</button>
+                </form>
+                <!-- Форма для удаления задачи -->
+                <form th:action="@{/api/v1/tasks/delete/{id}(id=${task.id})}" method="post">
+                    <button type="submit">Удалить</button>
+                </form>
+                <!-- Список подзадач для каждой задачи -->
+                <div th:if="${not #lists.isEmpty(task.subtask)}">
+                    <ul>
+                        <li th:each="subtask : ${task.subtask}">
+                            <!-- Форма для обновления подзадачи -->
+                            <form th:action="@{/api/v1/tasks/subtasks/update(taskId=${task.id})}" method="post">
+                                <input type="hidden" th:value="${subtask.id}" name="id"/>
+                                <input type="text" th:value="${subtask.title}" name="title"/>
+                                <textarea name="details" th:text="${subtask.details}">Описание</textarea>
+                                <!-- Добавьте здесь другие поля, если необходимо -->
+                                <button type="submit">Обновить подзадачу</button>
+                            </form>
+                            <!-- Форма для удаления подзадачи -->
+                            <form th:action="@{/api/v1/subtasks/delete/{id}(taskId=${task.id}, id=${subtask.id})}" method="post">
+                                <button type="submit">Удалить подзадачу</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- Форма для добавления новой задачи -->
+    <div>
+        <h3>Добавить задачу</h3>
+        <form th:action="@{/api/v1/tasks/create}" method="post">
+            <input type="text" name="title" placeholder="Название задачи"/>
+            <textarea name="details" placeholder="Описание задачи"></textarea>
+            <!-- Добавьте здесь другие поля, если необходимо -->
+            <button type="submit">Добавить</button>
+        </form>
+    </div>
 </main>
+<footer>
+    <p id="foot">© 2024 OuroborosOdyssey. Все права защищены.</p>
+</footer>
+<script>
 
+
+</script>
 </body>

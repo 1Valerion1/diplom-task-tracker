@@ -5,6 +5,12 @@
     <title>Статистика по вакансии</title>
     <!--  <link rel="icon"  th:src="@{/images/ourbor.png}" />-->
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+
         body {
             background-color:#FFFFFF;
             margin: 0;
@@ -12,10 +18,15 @@
             color: #000;
             font-size: 16px;
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
 
         }
+        main {
+            flex: 1;
+        }
         footer {
-            position: absolute;
+            position: relative;
             left: 0;
             bottom: 0;
             width: 100%;
@@ -179,7 +190,7 @@
 <header>
     <nav>
         <ul>
-            <li><h3 href="/">OuroborosOdyssey</h3></li>
+            <li><h3><a href="http://localhost:8081/api/v1/ouroboros">OuroborosOdyssey</a></h3></li>
             <li><a href="http://localhost:8081/api/v1/statistics">Требования на вакансии</a></li>
             <li><a href="http://localhost:8081/api/v1/plans">Посмотреть план изучения</a></li>
             <li><a href="http://localhost:8081/api/v1/tasks">Планировщик</a></li>
@@ -225,7 +236,9 @@
         </div>
     </div>
 </main>
-
+<footer>
+    <p id="foot">© 2024 OuroborosOdyssey. Все права защищены.</p>
+</footer>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

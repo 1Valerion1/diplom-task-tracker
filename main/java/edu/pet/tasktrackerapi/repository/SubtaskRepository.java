@@ -9,12 +9,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 public interface SubtaskRepository extends JpaRepository<Subtask, Long> {
-   // List<Subtask> getSubtaskByTasks_Id(UUID id);
 
     void deleteTaskById(Long uuid);
+    boolean existsByTaskIdAndId(Long taskId, Long id);
+
+     List<Subtask> getSubtasksByTask_Id(Long id);
 
     int countSubtasksByTaskAndCompleted(Task task, boolean completed);
 
@@ -32,7 +35,7 @@ public interface SubtaskRepository extends JpaRepository<Subtask, Long> {
     void updateCompleted(@Param("id") UUID uuid, @Param("title") String title, @Param("details") String details);
 
 
-    boolean existsByTaskAndId(Task task, Long uuid);
+    //  boolean existsByTaskAndId(Task task, Long uuid);
 
 
 }
