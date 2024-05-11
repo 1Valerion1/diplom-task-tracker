@@ -14,6 +14,8 @@ import java.util.UUID;
 
 public interface SubtaskRepository extends JpaRepository<Subtask, Long> {
 
+    boolean existsUpdateByTaskAndId(Task task, Long uuid);
+
     void deleteTaskById(Long uuid);
     boolean existsByTaskIdAndId(Long taskId, Long id);
 
@@ -25,17 +27,16 @@ public interface SubtaskRepository extends JpaRepository<Subtask, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE Subtask t SET t.title = :title,  t.details = :details, t.completed = :completed, t.completedAt = :completedAt WHERE t.id = :id")
-    void update(@Param("id") UUID uuid, @Param("title") String title, @Param("details") String details,
+    void update(@Param("id") Long uuid, @Param("title") String title, @Param("details") String details,
                 @Param("completed") boolean completed, @Param("completedAt") Timestamp completedAt);
 
 
     @Transactional
     @Modifying
     @Query("UPDATE Subtask t SET t.title = :title, t.details = :details WHERE t.id = :id")
-    void updateCompleted(@Param("id") UUID uuid, @Param("title") String title, @Param("details") String details);
+    void updateCompleted(@Param("id") Long uuid, @Param("title") String title, @Param("details") String details);
 
 
-    //  boolean existsByTaskAndId(Task task, Long uuid);
 
 
 }

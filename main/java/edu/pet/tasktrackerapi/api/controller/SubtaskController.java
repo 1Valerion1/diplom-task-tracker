@@ -61,16 +61,15 @@ public class SubtaskController {
     }
 
 
-////
-//    @PutMapping(value = "/update", produces = "application/json")
-//    @SecurityRequirement(name = "Bearer Authentication")
-//    @Operation(description = "Updating existing subtask")
-//    public ResponseEntity<TaskDto> updateSubtask(@AuthenticationPrincipal User user, @RequestBody @Valid TaskDto taskDto){
-//
-//        subtaskService.updateTaskIfBelongsToUser(user, taskDto);
-//
-//        return ResponseEntity.ok(taskDto);
-//    }
+    @PutMapping(value = "/update", produces = "application/json")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Operation(description = "Updating existing subtask")
+    public ResponseEntity<SubtaskDTO> updateSubtask(@AuthenticationPrincipal Task task, @RequestBody @Valid SubtaskDTO subtaskDTO){
+
+        subtaskService.updateTaskIfBelongsToUser(task, subtaskDTO);
+
+        return ResponseEntity.ok(subtaskDTO);
+    }
 
     @DeleteMapping(path = "/delete/{uuid}", produces = "application/json")
     @SecurityRequirement(name = "Bearer Authentication")

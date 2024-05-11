@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
@@ -17,7 +18,8 @@ import java.io.Serializable;
  * A DTO for the {@link Task} entity
  */
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
+//@RequiredArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Information about Task")
 public class TaskDto implements Serializable{
@@ -29,7 +31,7 @@ public class TaskDto implements Serializable{
     private String details;
 
     @Enumerated(EnumType.STRING)
-    private final Priorities priorities;
+    private  Priorities priorities;
 
 
     private boolean completed;

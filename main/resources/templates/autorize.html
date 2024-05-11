@@ -235,23 +235,9 @@
     </div>
 </main>
 
-<script>
-//    function fetchWithToken(url, options = {}) {
-//        // Получаем токен из sessionStorage
-//        const token = sessionStorage.getItem('token');
-//
-//        // Добавляем заголовок Authorization, если токен существует
-//        if (token) {
-//            options.headers = {
-//                ...options.headers,
-//                'Authorization': 'Bearer ' + token
-//            };
-//        }
-//
-//        // Выполняем запрос с добавленным токеном
-//        return fetch(url, options);
-//    }
-//
+<script >
+
+
     function showRegisterForm() {
         document.getElementById('loginSection').style.display = 'none';
         document.getElementById('registerSection').style.display = 'block';
@@ -261,6 +247,26 @@
         document.getElementById('registerSection').style.display = 'none';
         document.getElementById('loginSection').style.display = 'block';
     }
+
+    // Функция для установки токена в localStorage
+    function setToken(token) {
+        localStorage.setItem('token', token);
+    }
+
+    // Функция для получения токена из localStorage
+    function getToken() {
+        return localStorage.getItem('token');
+    }
+
+    // Интерцептор для добавления токена в заголовки запросов
+    function addTokenToHeaders(headers) {
+        const token = getToken();
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+    }
+
+    // Функция для отправки данных в формате JSON
     function sendJsonData(event, form) {
         event.preventDefault();
         const formData = new FormData(form);
@@ -269,13 +275,17 @@
             password: formData.get('password')
         };
 
-        const url = 'http://localhost:8081/api/v1/auth/authenticate';
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+        });
 
+        // Добавляем токен в заголовки
+        addTokenToHeaders(headers);
+
+        const url = 'http://localhost:8081/api/v1/auth/authenticate';
         fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify(data)
         })
             .then(response => {
@@ -285,15 +295,18 @@
             return response.json();
         })
             .then(data => {
-            // Сохраняем токен в localStorage или sessionStorage
-            sessionStorage.setItem('token', data.token);
-            // Перенаправляем пользователя на другую страницу
-           window.location.href = '/api/v1/plans';
+            onSuccessfulLogin(data);
         })
-
             .catch((error) => {
             console.error('Error:', error);
         });
+    }
+
+    // Вызовите эту функцию после успешной аутентификации
+    function onSuccessfulLogin(data) {
+        setToken(data.token);
+        // Теперь нет необходимости добавлять заголовки здесь
+        window.location.href = '/api/v1/tasks';
     }
 
     function sendJsonDataRegist(event, form) {
@@ -321,13 +334,11 @@
             }
             return response.json();
         })
-            .then(data => {
-            // Сохраняем токен в localStorage или sessionStorage
-            sessionStorage.setItem('token', data.token);
-            // Перенаправляем пользователя на другую страницу
-            window.location.href = '/api/v1/statistics';
+        axios.post(url, data)
+            .then(response => {
+            onSuccessfulLogin(response.data);
         })
-            .catch((error) => {
+            .catch(error => {
             console.error('Error:', error);
         });
     }

@@ -12,6 +12,8 @@ import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -52,35 +54,36 @@ public class SubtaskService {
     }
 
 
-//
-//    @Transactional
-//    public void updateTaskIfBelongsToUser(Task task, SubtaskDTO taskDto) {
-//        if (!subtaskRepository.existsByTaskAndId(task, taskDto.getId())){
-//            throw new NotFoundException();
-//        }
-//        Subtask subtask = subtaskRepository.findById(taskDto.getId()).get();
-//        if ((taskDto.isCompleted() && !task.isCompleted())){
-//            completeTask(taskDto);
-//
-//        } else if (taskDto.isCompleted()){
-//            updateCompletedTask(taskDto);
-//
-//        } else {
-//            updateTask(taskDto);
-//        }
-//
-//    }
-//    protected void updateTask(SubtaskDTO subtask){
-//        subtaskRepository.update(subtask.getId(), subtask.getTitle(), subtask.getDetails(), subtask.isCompleted(), null);
-//    }
-//
-//    protected void completeTask(SubtaskDTO subtask){
-//        subtaskRepository.update(subtask.getId(), subtask.getTitle(), subtask.getDetails(), subtask.isCompleted(), Timestamp.valueOf(LocalDateTime.now()));
-//    }
-//
-//    protected void updateCompletedTask(SubtaskDTO subtask){
-//        subtaskRepository.updateCompleted(subtask.getId(), subtask.getTitle(), subtask.getDetails());
-//    }
+
+    @Transactional
+    public void updateTaskIfBelongsToUser(Task task, SubtaskDTO subtaskDTO) {
+
+        if (!subtaskRepository.existsByTaskIdAndId(subtaskDTO.getTaskId(), subtaskDTO.getId())){
+            throw new NotFoundException();
+        }
+        Subtask subtask = subtaskRepository.findById(subtaskDTO.getId()).get();
+        if ((subtaskDTO.isCompleted() /*&& !task.isCompleted()*/)){
+            completeSubtask(subtaskDTO);
+
+        } else if (subtaskDTO.isCompleted()){
+            updateCompletedTask(subtaskDTO);
+
+        } else {
+            updateTask(subtaskDTO);
+        }
+
+    }
+    protected void updateTask(SubtaskDTO subtask){
+        subtaskRepository.update(subtask.getId(), subtask.getTitle(), subtask.getDetails(), subtask.isCompleted(), null);
+    }
+
+    protected void completeSubtask(SubtaskDTO subtask){
+        subtaskRepository.update(subtask.getId(), subtask.getTitle(), subtask.getDetails(), subtask.isCompleted(), Timestamp.valueOf(LocalDateTime.now()));
+    }
+
+    protected void updateCompletedTask(SubtaskDTO subtask){
+        subtaskRepository.updateCompleted(subtask.getId(), subtask.getTitle(), subtask.getDetails());
+    }
 
 
     // Помни что если у подзадачи есть id, то его надо тоже учитвывать.

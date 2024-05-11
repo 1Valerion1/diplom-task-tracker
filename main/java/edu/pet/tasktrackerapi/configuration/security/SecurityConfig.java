@@ -26,19 +26,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // .httpBasic(Customizer.withDefaults());
+
                 .csrf()
                 .disable()
-
-//                .authorizeHttpRequests()
-//                .requestMatchers("/api/v1/auth/**").permitAll()
-//                .anyRequest().authenticated()
                 .authorizeHttpRequests((authz) -> authz
                       //  .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
-             //  .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -59,9 +54,9 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/statistics/**")
                 .requestMatchers("/api/v1/questions/**")
                 .requestMatchers("/api/v1/plans/**")
-                .requestMatchers("/api/v1/tasks/**")
+                .requestMatchers("/api/v1/tasks")
                 .requestMatchers("/api/v1/themes/**")
-                .requestMatchers("/api/v1/ouroboros/**")
+                .requestMatchers("/api/v1/ouroboros")
 
                 .requestMatchers("/api/v1/user/**")
 

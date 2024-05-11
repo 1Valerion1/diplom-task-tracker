@@ -67,9 +67,9 @@ public class TaskController {
         return ResponseEntity.ok(uuid);
     }
     /////////////////////////Сделать CRUD для SubTask тут же
-
     @GetMapping
     public String showQuestions(Model model) {
+
         return "tasks";
     }
 

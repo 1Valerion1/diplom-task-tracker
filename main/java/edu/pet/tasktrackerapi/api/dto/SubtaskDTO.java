@@ -24,6 +24,7 @@ import java.util.UUID;
 public class SubtaskDTO implements Serializable  {
 
     private Long id;
+    private Long taskId;
     @NotBlank
     private String title;
     @NotNull
