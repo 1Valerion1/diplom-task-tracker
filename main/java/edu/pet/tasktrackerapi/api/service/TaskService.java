@@ -6,6 +6,7 @@ import edu.pet.tasktrackerapi.api.model.Task;
 import edu.pet.tasktrackerapi.api.model.User;
 import edu.pet.tasktrackerapi.exception.NotFoundException;
 import edu.pet.tasktrackerapi.repository.planner.TaskRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +36,14 @@ public class TaskService {
                 .build();
 
         return taskRepository.save(newTask).getId();
+    }
+
+    public Task getIdTask(Long taskId){
+        Task task = taskRepository.findTaskById(taskId);
+        if (task == null) {
+            return null;
+        }
+        return task;
     }
 
     public List<TaskDto> getUsersTasksDto(User user) {

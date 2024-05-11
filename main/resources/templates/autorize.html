@@ -319,13 +319,17 @@
             confirmPassword: formData.get('confirmPassword')
         };
 
+        const headers = new Headers({
+            'Content-Type': 'application/json',
+        });
+        // Добавляем токен в заголовки
+        addTokenToHeaders(headers);
+
         const url = 'http://localhost:8081/api/v1/auth/register';
 
         fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: headers,
             body: JSON.stringify(data)
         })
             .then(response => {
@@ -334,9 +338,8 @@
             }
             return response.json();
         })
-        axios.post(url, data)
-            .then(response => {
-            onSuccessfulLogin(response.data);
+            .then(data => {
+            onSuccessfulLogin(data);
         })
             .catch(error => {
             console.error('Error:', error);

@@ -3,10 +3,8 @@ package edu.pet.tasktrackerapi.api.controller;
 
 import edu.pet.tasktrackerapi.api.dto.NewTaskRequest;
 import edu.pet.tasktrackerapi.api.dto.SubtaskDTO;
-import edu.pet.tasktrackerapi.api.dto.TaskDto;
 import edu.pet.tasktrackerapi.api.model.Subtask;
 import edu.pet.tasktrackerapi.api.model.Task;
-import edu.pet.tasktrackerapi.api.model.User;
 import edu.pet.tasktrackerapi.api.service.SubtaskService;
 import edu.pet.tasktrackerapi.api.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,10 +12,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +25,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Subtasks", description = "Methods for subtask management")
 public class SubtaskController {
-
-    private final SubtaskService subtaskService;
+    @Autowired
+    private  SubtaskService subtaskService;
+    @Autowired
+    private TaskService taskService;
 //
     @GetMapping(produces = "application/json" , value = "/getAll")
     @SecurityRequirement(name = "Bearer Authentication")
@@ -43,9 +43,12 @@ public class SubtaskController {
     @GetMapping(produces = "application/json" , value = "/getOne")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting list of subtasks")
-    public ResponseEntity<List<SubtaskDTO>> getSubtasks(Task task){
-
-        System.out.println(subtaskService.getSubtask(task));
+    public ResponseEntity<List<SubtaskDTO>> getSubtasks(@RequestParam("taskId") Long taskId){
+        Task task = taskService.getIdTask(taskId); // Предполагается, что у вас есть метод для получения Task по id
+        if (task == null) {
+            return ResponseEntity.notFound().build();
+        }
+        System.out.println(subtaskService.getSubtask(task));;
 
         return ResponseEntity.ok(subtaskService.getSubtask(task));
     }

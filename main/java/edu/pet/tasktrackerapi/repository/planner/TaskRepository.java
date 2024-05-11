@@ -20,6 +20,9 @@ public interface TaskRepository extends JpaRepository<Task, Long> { // тут п
 
     int countTasksByUserAndCompleted(User user, boolean completed);
 
+    @Query("SELECT t FROM Task t WHERE t.id = :id")
+    Task findTaskById(@Param("id") Long id);
+
     @Transactional
     @Modifying
     @Query("UPDATE Task t SET t.title = :title, t.details = :details, t.completed = :completed, t.completedAt = :completedAt,t.priorities = :priorities WHERE t.id = :id")
