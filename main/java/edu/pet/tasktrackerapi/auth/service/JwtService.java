@@ -1,6 +1,6 @@
 package edu.pet.tasktrackerapi.auth.service;
 
-import edu.pet.tasktrackerapi.api.model.User;
+import edu.pet.tasktrackerapi.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

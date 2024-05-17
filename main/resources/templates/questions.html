@@ -4,7 +4,6 @@
     <meta content="text/html" ; charset="UTF-8">
     <title>Статистика по вакансии</title>
     <link rel="icon" th:src="@{/images/ourbor.png}"/>
-    <!--    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />-->
     <style>
         html, body {
             height: 100%;
@@ -246,14 +245,17 @@
                 <tr>
                     <th>Тема</th>
                     <th>Вопрос</th>
-                    <th>Ответ</th>
+                    <th>Cсылка</th>
+<!--                    <th>Ответ</th>-->
+
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="question : ${questions}">
                     <td th:text="${question.nameThemes}">Sample Theme</td>
-                    <td th:text="${question.titleQuestions}">Sample Title</td>
-                    <td th:text="${question.answer}">Sample Answer</td>
+                    <td th:text="${question.titleQuestions}" >Sample Title</td>
+                    <td th:text="${question.links}">Sample Link</td>
+<!--                    <td th:utext="${question.answer}" style="text-align: justify;">Sample Answer</td>-->
                 </tr>
                 </tbody>
             </table>
@@ -312,7 +314,8 @@
                 row.innerHTML = `
                 <td>${question.nameThemes}</td>
                 <td>${question.titleQuestions}</td>
-                <td>${question.answer}</td>
+
+                <td>${question.links}</td>
             `;
                 tableBody.appendChild(row);
             });
@@ -374,7 +377,7 @@
             const row = `<tr>
             <td>${question.nameThemes}</td>
             <td>${question.titleQuestions}</td>
-            <td>${question.answer}</td>
+             <td>${question.links}</td>
         </tr>`;
             tableBody.innerHTML += row;
         });

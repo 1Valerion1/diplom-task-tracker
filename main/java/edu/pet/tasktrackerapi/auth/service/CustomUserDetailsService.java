@@ -1,7 +1,7 @@
 package edu.pet.tasktrackerapi.auth.service;
 
-import edu.pet.tasktrackerapi.api.model.User;
-import edu.pet.tasktrackerapi.repository.planner.UserRepository;
+import edu.pet.tasktrackerapi.model.User;
+import edu.pet.tasktrackerapi.dao.repository.planner.UserRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

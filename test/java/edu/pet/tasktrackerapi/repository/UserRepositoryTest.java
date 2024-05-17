@@ -1,8 +1,8 @@
 package edu.pet.tasktrackerapi.repository;
 
-import edu.pet.tasktrackerapi.api.model.Enum.Role;
-import edu.pet.tasktrackerapi.api.model.User;
-import edu.pet.tasktrackerapi.repository.planner.UserRepository;
+import edu.pet.tasktrackerapi.model.Enum.Role;
+import edu.pet.tasktrackerapi.model.User;
+import edu.pet.tasktrackerapi.dao.repository.planner.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

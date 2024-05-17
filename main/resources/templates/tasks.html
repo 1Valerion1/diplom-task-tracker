@@ -549,8 +549,6 @@
     // Функция для удаления задачи
     function deleteTask(taskId) {
         const token = localStorage.getItem('token');
-
-        // Отправляем запрос на удаление задачи
         fetch(`/api/v1/tasks/delete/${taskId}`, {
             method: 'DELETE',
             headers: {
@@ -565,7 +563,6 @@
         })
             .then(() => {
             console.log('Задача удалена');
-            // Здесь можно обновить DOM, чтобы удалить элемент задачи
         })
             .catch(error => {
             console.error('Ошибка при удалении задачи:', error);
