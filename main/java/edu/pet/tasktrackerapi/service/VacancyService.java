@@ -49,4 +49,16 @@ public class VacancyService {
     public List<VacancySkills> getAllSkils() {
         return vacancySkillRepository.findAll();
     }
+
+
+    public Vacancy getLastVacancy() {
+        return vacancyRepository.findTopByOrderByIdDesc();
+    }
+
+    public List<VacancySkills> getSkillsByVacancyId(Long vacancyId) {
+        return vacancySkillRepository.findByVacancyId(vacancyId);
+    }
+
+
+
 }

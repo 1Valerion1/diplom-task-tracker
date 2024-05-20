@@ -34,7 +34,7 @@ public class PlanController {
     @PostMapping(produces = "application/json", value = "/create")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Creating new plan")
-    public ResponseEntity<Long> createTheme(@RequestBody @Valid Plan plan) {
+    public ResponseEntity<Long> createPlan(@RequestBody @Valid Plan plan) {
 
         Long planId = plansService.createPlan(plan);
 

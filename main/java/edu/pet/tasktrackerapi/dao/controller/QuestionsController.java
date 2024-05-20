@@ -50,7 +50,6 @@ public class QuestionsController {
     public ResponseEntity<Long> createQuest(@RequestBody @Valid Questions quest){
         List<Theme> themes =  themesSevice.findByName(quest.getNameThemes());
         if(themes.isEmpty()){
-            // Ошибка: тема не найдена, обработайте этот случай соответствующим образом
             return ResponseEntity.notFound().build();
         }
         Theme theme = themes.get(0);

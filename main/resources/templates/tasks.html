@@ -316,9 +316,8 @@
 <main>
     <!-- Форма для добавления новой задачи Работает -->
     <div>
-        <h3>Добавить задачу</h3>
-
         <form th:action="@{/api/v1/tasks/create}" method="post">
+            <h3>Добавить задачу</h3>
             <input type="text" name="title" placeholder="Название задачи"/>
             <textarea name="details" placeholder="Описание задачи"></textarea>
             <select name="priorities">

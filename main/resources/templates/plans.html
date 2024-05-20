@@ -184,6 +184,68 @@
             text-decoration: none;
         }
 
+        .form-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        form {
+            width: 30%; /* Ширина каждой формы */
+            background-color: #f8f8f8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        form h3, h4 {
+            text-align: center;
+            margin: 0 0 10px 0;
+            color: #007991;
+        }
+
+        input[type="text"], textarea, select {
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+            background-color: #fcfcfc;
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #007991;
+            outline: none;
+        }
+
+        button[type="button"] {
+            width: 100%;
+            margin: 5px;
+            padding: 10px;
+            background-color: #007991;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button[type="button"]:hover {
+            background-color: #005f6b;
+        }
+
+        .message-box {
+            display: none;
+            color: red;
+            margin-top: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -202,6 +264,37 @@
 </header>
 
 <main>
+    <h4>Панель администратора</h4>
+
+    <div class="form-container">
+        <form id="createForm">
+            <h3>Добавить тему</h3>
+
+            <input type="text" id="title" placeholder="Заголовок темы" />
+            <textarea id="answer" placeholder="Описание и рекомендации"></textarea>
+            <input type="text" id="links" placeholder="Ссылки" />
+            <button type="button" onclick="createQuestion()">Добавить</button>
+            <div class="message-box" id="createMessage"></div>
+        </form>
+
+
+        <form id="updateForm" style="display;">
+            <h3>Обновить </h3>
+            <input type="hidden" id="updateId" />
+            <input type="text" id="updateTitle" placeholder="Заголовок темы" />
+            <textarea id="updateAnswer" placeholder="Описание и рекомендации"></textarea>
+            <select class="themeSelect">
+                <option value="">-- Выберите тему --</option>
+            </select>
+            <input type="text" id="updateLinks" placeholder="Ссылки" />
+            <button type="button" onclick="updateTheme()">Обновить</button>
+            <div class="message-box" id="updateMessage"></div>
+        </form>
+
+
+    </div>
+
+
     <div class="main-content">
         <h3>План изучения</h3>
         <div id="plan-container">
@@ -214,7 +307,11 @@
                         <ul>
                             <li th:each="theme : ${plans.theme}">
                                 <div class="card">
-                                    <div class="card-header" th:text="${theme.title}"></div>
+                                    <div class="card-header">
+                                        <span th:text="${theme.title}"></span></n>
+                                        <button type="button" onclick="editTheme(${theme.id})">Изменить</button>
+                                        <button type="button" onclick="deleteTheme(${theme.id})">Удалить</button>
+                                    </div>
                                     <div class="card-content">
                                         <p>Описание:</p>
                                         <p th:utext="${theme.details}"></p>
@@ -226,7 +323,9 @@
                                                 th:text="${question.titleQuestions}"></li>
 
                                         </ul>
+
                                     </div>
+
                                 </div>
                             </li>
                         </ul>
@@ -243,6 +342,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         function fetchPlan(id) {
+            const token = localStorage.getItem('token');
+
             console.log('Запрос к серверу с ID:', id);
             fetch(`http://localhost:8081/api/v1/plans/getOne?id=${id}`)
                 .then(response => response.json())
@@ -264,7 +365,10 @@
             const themesHtml = plan.theme.map(theme => `
                 <li>
                     <div class="card">
-                    <div class="card-header">${theme.title}</div>
+                    <div class="card-header">
+                    ${theme.title}
+
+                   </div>
                     <div class="card-content">
                         <p>Описание:</p>
                         ${formatDetails(theme.details)}
@@ -288,6 +392,63 @@
                 </div>
             `;
         }
+        window.editTheme = function(id, title, description, links) {
+            document.getElementById('updateForm').style.display = 'block';
+            document.getElementById('updateId').value = id;
+            document.getElementById('updateTitle').value = title;
+            document.getElementById('updateAnswer').value = description;
+            document.getElementById('updateLinks').value = links;
+        };
+
+        window.updateTheme = function() {
+            const id = document.getElementById('updateId').value;
+            const title = document.getElementById('updateTitle').value;
+            const description = document.getElementById('updateAnswer').value;
+            const links = document.getElementById('updateLinks').value;
+
+            fetch(`http://localhost:8081/api/v1/themes/update`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: id,
+                    title: title,
+                    details: description,
+                    links: links
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                document.getElementById('updateMessage').innerText = 'Обновление прошло успешно!';
+                fetchPlan(2);  // обновить список планов
+            })
+                .catch(error => {
+                console.error('Ошибка при обновлении темы:', error);
+                document.getElementById('updateMessage').innerText = 'Ошибка при обновлении.';
+            });
+        };
+
+        window.deleteTheme = function(id) {
+            const confirmDelete = confirm('Вы действительно хотите удалить эту тему?');
+            if (!confirmDelete)
+            return;
+
+            fetch(`http://localhost:8081/api/v1/themes/delete/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                fetchPlan(2);  // обновить список планов
+            })
+                .catch(error => {
+                console.error('Ошибка при удалении темы:', error);
+            });
+        };
+    });
 
         function formatDetails(details) {
             const paragraphs = details.split(/(?<=\.|\?|\!|\:)\s/);

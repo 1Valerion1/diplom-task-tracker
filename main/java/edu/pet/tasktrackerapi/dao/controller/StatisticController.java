@@ -20,12 +20,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -43,42 +41,6 @@ public class StatisticController {
     private HHService hhService;
     @Autowired
     private VacancyService vacancyService;
-    @SecurityRequirement(name = "Bearer Authentication")
-    @GetMapping(value = "/updateData", produces = MediaType.TEXT_HTML_VALUE)
-    public ModelAndView getVacancyJava() {
-        String searchQuery = "Java";
-        String URL = "https://api.hh.ru/vacancies";
-
-        UriComponentsBuilder queryParams = UriComponentsBuilder.fromHttpUrl(URL)
-                .queryParam("text", "NAME:(!" + searchQuery + ")")
-                .queryParam("ored_clusters", "true")
-                .queryParam("enable_snippets", "true")
-                .queryParam("area", "113");
-
-        String search = queryParams.toUriString();
-
-        RestTemplate restTemplateWithHeaders = new RestTemplate();
-        restTemplateWithHeaders.setInterceptors(Collections.singletonList((request, body, execution) -> {
-            request.getHeaders().addAll(hhApiHeaders);
-            return execution.execute(request, body);
-        }));
-
-        ResponseEntity<String> response = restTemplate.getForEntity(search, String.class);
-
-        try {
-            Vacancy vacancy = objectMapper.readValue(response.getBody(), Vacancy.class);
-
-            // Создаем объект ModelAndView и добавляем в него данные для JSON-ответа и имя HTML-страницы
-            ModelAndView modelAndView = new ModelAndView("HHStatistic");
-            modelAndView.addObject("vacancyInfo", vacancy);
-
-            return modelAndView;
-        } catch (IOException e) {
-            // В случае ошибки возвращаем соответствующий JSON-ответ
-            ModelAndView errorModelAndView = new ModelAndView("errorPage");
-            return errorModelAndView;
-        }
-    }
 
     @GetMapping(value = "/updateData", produces = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "Bearer Authentication")
@@ -115,26 +77,34 @@ public class StatisticController {
     @GetMapping(value = "/getStatistics")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting Vacansy all Skills info")
-    public ResponseEntity<List<VacancySkills>> getStatistic(){
+    public ResponseEntity<List<VacancySkills>> getStatistic() {
 
-        return new ResponseEntity<>(vacancyService.getAllSkils(),HttpStatus.OK);
+        return new ResponseEntity<>(vacancyService.getAllSkils(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/getVacansy")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting Vacansy all info")
-    public ResponseEntity<List<Vacancy>> getInfo(){
+    public ResponseEntity<List<Vacancy>> getInfo() {
 
-        return new ResponseEntity<>(vacancyService.getallData(),HttpStatus.OK);
+        return new ResponseEntity<>(vacancyService.getallData(), HttpStatus.OK);
     }
+
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping
     public String showStatistics(Model model) {
-        model.addAttribute("vacancies", vacancyService.getallData());
-        model.addAttribute("skills", vacancyService.getAllSkils());
+        Vacancy lastVacancy = vacancyService.getLastVacancy();
+
+
+        Long lastVacancyId = lastVacancy.getId();
+        List<VacancySkills> skillsForLastVacancy = vacancyService.getSkillsByVacancyId(lastVacancyId);
+        model.addAttribute("vacancies", lastVacancy);
+        model.addAttribute("skills", skillsForLastVacancy);
+//        } else {
+//            model.addAttribute("vacancies", Collections.emptyList());
+//            model.addAttribute("skills", Collections.emptyList());
+//        }
         return "statistics";
     }
-
-
 
 }

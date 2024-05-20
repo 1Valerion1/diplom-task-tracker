@@ -162,7 +162,66 @@
             margin: 0 auto;
             display: block;
         }
+        .form-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
 
+        form {
+            width: 30%; /* Ширина каждой формы */
+            background-color: #f8f8f8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        form h3, h4 {
+            text-align: center;
+            margin: 0 0 10px 0;
+            color: #007991;
+        }
+
+        input[type="text"], textarea, select {
+            width: calc(100% - 24px);
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 14px;
+            background-color: #fcfcfc;
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: #007991;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007991;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #005f6b;
+        }
+
+        .message-box {
+            display: none;
+            color: red;
+            margin-top: 10px;
+        }
 
     </style>
 </head>
@@ -182,6 +241,18 @@
 </header>
 
 <main>
+    <h4>Панель администратора</h4>
+
+    <div class="form-container">
+
+        <form id="updateForm" style="display;" th:action="@{/api/v1/statistics/updateData}" method="get">
+            <h3>Обновить требования</h3>
+            <button type="submit"  >Обновить</button>
+            <div class="message-box" id="updateMessage"></div>
+        </form>
+    </div>
+
+
     <div id="textVac" th:each="vacancy : ${vacancies}">
         <p>По направлению: <span th:text="${vacancy.profession}"></span></p>
         <p>Найдено вакансий: <span th:text="${vacancy.numberVacancies}"></span></p>
@@ -215,21 +286,31 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
-    function fetchWithToken(url, options = {}) {
-        // Получаем токен из sessionStorage
-        const token = sessionStorage.getItem('token');
+    document.getElementById('updateForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-        // Добавляем заголовок Authorization, если токен существует
-        if (token) {
-            options.headers = {
-                ...options.headers,
-                'Authorization': 'Bearer ' + token
-            };
-        }
+        const token = localStorage.getItem('token');
+        const url = this.action;
 
-        // Выполняем запрос с добавленным токеном
-        return fetch(url, options);
-    }
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+
+            document.getElementById('updateMessage').textContent = 'Требования обновлены';
+        })
+            .catch(error => {
+
+            console.error('Ошибка при обновлении требований:', error);
+            document.getElementById('updateMessage').textContent = 'Ошибка при обновлении требований';
+        });
+    });
+
 
     const tableBody = document.querySelector('tbody');
     const rows = tableBody.querySelectorAll('tr');
