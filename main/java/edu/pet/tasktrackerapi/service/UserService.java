@@ -1,13 +1,12 @@
 package edu.pet.tasktrackerapi.service;
 
 import edu.pet.tasktrackerapi.dao.dto.UserDto;
-import edu.pet.tasktrackerapi.model.User;
 import edu.pet.tasktrackerapi.dao.exception.NotFoundException;
 import edu.pet.tasktrackerapi.dao.repository.planner.UserRepository;
+import edu.pet.tasktrackerapi.model.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 
 import java.util.function.Supplier;
 

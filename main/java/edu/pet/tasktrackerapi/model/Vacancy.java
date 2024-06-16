@@ -18,7 +18,4 @@ public class Vacancy {
     private int numberVacancies;
     @Column
     private String Url;
-
-
-
 }

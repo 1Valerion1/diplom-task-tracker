@@ -16,9 +16,10 @@ public interface SubtaskRepository extends JpaRepository<Subtask, Long> {
     boolean existsUpdateByTaskAndId(Task task, Long uuid);
 
     void deleteTaskById(Long uuid);
+
     boolean existsByTaskIdAndId(Long taskId, Long id);
 
-     List<Subtask> getSubtasksByTask_Id(Long id);
+    List<Subtask> getSubtasksByTask_Id(Long id);
 
     int countSubtasksByTaskAndCompleted(Task task, boolean completed);
 
@@ -34,8 +35,5 @@ public interface SubtaskRepository extends JpaRepository<Subtask, Long> {
     @Modifying
     @Query("UPDATE Subtask t SET t.title = :title, t.details = :details WHERE t.id = :id")
     void updateCompleted(@Param("id") Long uuid, @Param("title") String title, @Param("details") String details);
-
-
-
 
 }

@@ -26,9 +26,11 @@ public class SecurityConfig {
 
                 .csrf()
                 .disable()
+
                 .authorizeHttpRequests((authz) -> authz
                       //  .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/styles/**","/js/**","/static/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement()
@@ -51,12 +53,10 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/statistics/**")
                 .requestMatchers("/api/v1/questions/**")
                 .requestMatchers("/api/v1/plans/**")
-                .requestMatchers("/api/v1/tasks")
+                .requestMatchers("/api/v1/tasks/**")
                 .requestMatchers("/api/v1/themes/**")
                 .requestMatchers("/api/v1/ouroboros")
-
                 .requestMatchers("/api/v1/user/**")
-
                 .requestMatchers("/v3/api-docs/**")
                 .requestMatchers("configuration/**")
                 .requestMatchers("/swagger*/**")

@@ -9,7 +9,7 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
-        //@EnableWebMvc
+//@EnableWebMvc
 public class ThymeleafConfiguration {
 
     @Bean
@@ -21,8 +21,7 @@ public class ThymeleafConfiguration {
 
     @Bean
     public SpringResourceTemplateResolver thymeleafTemplateResolver() {
-        SpringResourceTemplateResolver templateResolver
-                = new SpringResourceTemplateResolver();
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setPrefix("classpath:templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
@@ -32,7 +31,7 @@ public class ThymeleafConfiguration {
     }
 
     @Bean
-    public ThymeleafViewResolver viewResolver(){
+    public ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         return viewResolver;

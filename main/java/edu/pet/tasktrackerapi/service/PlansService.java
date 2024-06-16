@@ -1,8 +1,8 @@
 package edu.pet.tasktrackerapi.service;
 
-import edu.pet.tasktrackerapi.model.Plan;
 import edu.pet.tasktrackerapi.dao.exception.NotFoundException;
 import edu.pet.tasktrackerapi.dao.repository.planner.PlanRepository;
+import edu.pet.tasktrackerapi.model.Plan;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PlansService {
     private final PlanRepository planRepository;
+
     public Long createPlan(Plan plan) {
         Plan plans = Plan
                 .builder()
@@ -36,7 +37,7 @@ public class PlansService {
     }
 
     @Transactional
-    public void deletePlan (Long id) {
+    public void deletePlan(Long id) {
         planRepository.deletePlanById(id);
     }
 

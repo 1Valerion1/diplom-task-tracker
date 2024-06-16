@@ -25,8 +25,4 @@ public interface ThemesRepository extends JpaRepository<Theme, Long> {
     @Query("UPDATE Theme t SET t.title = :title, t.details = :details, t.links = :links WHERE t.id = :id")
     void update(@Param("id") Long id, @Param("title") String title, @Param("details") String details, @Param("links") String links);
 
-
-
-    //boolean existsByPlanAndId(Plan plan, Long uuid);
-
 }

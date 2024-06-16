@@ -23,7 +23,6 @@ public class RabbitMessageSender {
             rabbitTemplate.convertAndSend(queueName, objectMapper.writeValueAsString(emailDto));
         }catch (Exception e){
             //TODO log ex when unable to connect service
-            //handle exception in controlleradvice analog????
         }
 
 

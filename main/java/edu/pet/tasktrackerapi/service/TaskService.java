@@ -36,7 +36,7 @@ public class TaskService {
         return taskRepository.save(newTask).getId();
     }
 
-    public Task getIdTask(Long taskId){
+    public Task getIdTask(Long taskId) {
         Task task = taskRepository.findTaskById(taskId);
         if (task == null) {
             return null;
@@ -62,7 +62,6 @@ public class TaskService {
         if (!taskRepository.existsByUserAndId(user, taskDto.getId())) {
             throw new NotFoundException();
         }
-       // TaskEntity taskEntity = modelMapper.map(task, TaskEntity.class);
         Task task = taskRepository.findById(taskDto.getId()).get();
         if ((taskDto.isCompleted() && !task.isCompleted())) {
             completeTask(taskDto);
@@ -89,7 +88,6 @@ public class TaskService {
     protected void updateCompletedTask(TaskDto task) {
         taskRepository.updateCompleted(task.getId(), task.getTitle(), task.getDetails(), task.getPriorities());
     }
-
 
     @Transactional
     public void deleteTask(User user, Long id) {

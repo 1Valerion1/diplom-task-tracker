@@ -19,7 +19,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 public class Subtask extends AbstractTask implements Serializable {
-    // будет списком задач в задаче
 
     @ToString.Exclude
     @JsonIgnore

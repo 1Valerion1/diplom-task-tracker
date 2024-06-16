@@ -30,14 +30,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> { // тут п
                 @Param("completed") boolean completed, @Param("completedAt")Timestamp completedAt,
                 @Param("priorities") Priorities priorities);
 
-
     @Transactional
     @Modifying
     @Query("UPDATE Task t SET t.title = :title, t.details = :details,t.priorities = :priorities WHERE t.id = :id")
     void updateCompleted(@Param("id") Long uuid, @Param("title") String title, @Param("details") String details, @Param("priorities") Priorities priorities);
 
-
     boolean existsByUserAndId(User user, Long uuid);
-
-
 }

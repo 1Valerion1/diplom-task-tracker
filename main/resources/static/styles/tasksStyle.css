@@ -1,0 +1,212 @@
+@import url('base.css');
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: color 0.3s;
+}
+header nav ul li a:hover {
+    color: #000;
+}
+
+/* Общие стили для формы */
+form {
+    width: 80%;
+    margin-left: 20px;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    margin: 20px auto;
+}
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+    background-color: #007991;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #08a7c7;
+}
+
+@media (max-width: 768px) {
+    form {
+        width: 90%;
+        padding: 15px;
+    }
+    header nav ul {
+        flex-direction: row;
+    }
+
+    header nav ul li {
+        margin-bottom: 5px;
+    }
+    main {
+        flex-direction: column;
+    }
+
+    #tasksContainer,
+    form {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+#tasksContainer {
+    width: 60%;
+    margin-right: 30px;
+}
+.task-item {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: auto;
+    max-width: 100%;
+}
+
+.task-item p {
+    margin: 5px 0;
+}
+
+.task-actions {
+    margin-top: 10px;
+}
+
+/* Стили для подзадач */
+.subtask-item {
+    border: 1px solid #ccc;
+    padding: 8px;
+    margin-top: 5px;
+    margin-left: 20px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+}
+
+.subtasks-container {
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+#editFormContainer {
+    display: block;
+    width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#editFormContainer:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+#editFormContainer input[type="text"],
+#editFormContainer textarea {
+    width:100%;
+/*    width: calc(100% - 40px); */
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+#editFormContainer select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    margin-bottom: 10px;
+}
+
+#editFormContainer button {
+    margin: 5px;
+    width: 100%;
+    padding: 15px;
+    border-radius: 4px;
+    border: none;
+    background-color: #007991;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#editFormContainer button:hover {
+    background-color: #005f6b;
+}
+
+/* Стили для выбора приоритета */
+#editFormContainer .priority-selector {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.priority-button {
+    flex-grow: 2;
+    margin: 10px;
+    margin: 0 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ccc;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.priority-button:hover {
+    background-color: #bbb;
+}
+
+.priority-button.active {
+    background-color: #007991;
+    color: white;
+}
+button{
+    margin: 5px;
+    width: 100%;
+    padding: 15px;
+    border-radius: 4px;
+    border: none;
+    background-color: #007991;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

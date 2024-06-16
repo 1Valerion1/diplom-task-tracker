@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface PlanRepository extends JpaRepository<Plan, Long> {
-
     List<Questions> getPlanByTheme_Id(Long id);
     void deletePlanById(Long id);
 

@@ -95,15 +95,11 @@ public class StatisticController {
     public String showStatistics(Model model) {
         Vacancy lastVacancy = vacancyService.getLastVacancy();
 
-
         Long lastVacancyId = lastVacancy.getId();
         List<VacancySkills> skillsForLastVacancy = vacancyService.getSkillsByVacancyId(lastVacancyId);
         model.addAttribute("vacancies", lastVacancy);
         model.addAttribute("skills", skillsForLastVacancy);
-//        } else {
-//            model.addAttribute("vacancies", Collections.emptyList());
-//            model.addAttribute("skills", Collections.emptyList());
-//        }
+
         return "statistics";
     }
 

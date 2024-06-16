@@ -1,10 +1,10 @@
 package edu.pet.tasktrackerapi.service;
 
 import edu.pet.tasktrackerapi.dao.dto.VacancyDTO;
-import edu.pet.tasktrackerapi.model.Vacancy;
-import edu.pet.tasktrackerapi.model.VacancySkills;
 import edu.pet.tasktrackerapi.dao.repository.parserHH.VacancyRepository;
 import edu.pet.tasktrackerapi.dao.repository.parserHH.VacancySkillsRepository;
+import edu.pet.tasktrackerapi.model.Vacancy;
+import edu.pet.tasktrackerapi.model.VacancySkills;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,18 +38,16 @@ public class VacancyService {
         vacancy.setUrl(vacancyDTO.getAlternateUrl());
 
         Vacancy vacSave = vacancyRepository.save(vacancy);
-        return  vacSave;
+        return vacSave;
     }
 
     public List<Vacancy> getallData() {
-             return vacancyRepository.findAll();
+        return vacancyRepository.findAll();
     }
-
 
     public List<VacancySkills> getAllSkils() {
         return vacancySkillRepository.findAll();
     }
-
 
     public Vacancy getLastVacancy() {
         return vacancyRepository.findTopByOrderByIdDesc();
@@ -58,7 +56,5 @@ public class VacancyService {
     public List<VacancySkills> getSkillsByVacancyId(Long vacancyId) {
         return vacancySkillRepository.findByVacancyId(vacancyId);
     }
-
-
 
 }

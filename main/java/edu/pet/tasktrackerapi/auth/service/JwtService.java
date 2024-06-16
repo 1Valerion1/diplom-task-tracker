@@ -19,10 +19,7 @@ import java.util.function.Function;
 public class JwtService {
     //TODO change + move to application props + .env file
     private static final String SECRET_KEY = "66652B586E3272357538782F413F4428472B4B6250655368566D597133733676";
-    private static final Integer EXPIRATION_TIME_MILLS = 1000 * 60 * 24;
-
-    private static final String REFRESH_SECRET_KEY = "66652B586E3272357538782F413F4428472B4B6250655368566D597133733676";
-    private static final Integer REFRESH_EXPIRATION_TIME_MILLS = 1000 * 60 * 1;
+    private static final Integer EXPIRATION_TIME_MILLS = 1000 * 60 * 1;
 
     public String extractUsername(String token) {
         return extractClaims(token, Claims::getSubject);
@@ -33,9 +30,6 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    //    public String generateToken(User userDetails){
-//        return generateToken(new HashMap<>(), userDetails);
-//    }
     public String extractEmail(String token) {
         return extractClaims(token, claims -> String.valueOf(claims.get("email")));
     }
@@ -90,6 +84,4 @@ public class JwtService {
                 .getBody();
 
     }
-
-
 }

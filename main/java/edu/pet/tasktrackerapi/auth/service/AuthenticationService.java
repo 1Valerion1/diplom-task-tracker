@@ -56,10 +56,6 @@ public class AuthenticationService {
                 .findByEmail(authenticationRequest.getEmail())
                 .get();
 
-//        if (user.getRole() == Role.ADMIN) {
-//            throw new RuntimeException("Invalid credentials for admin");
-//        }
-
         var jwtToken = jwtService.generateToken(user);
 
         return AuthenticationResponse

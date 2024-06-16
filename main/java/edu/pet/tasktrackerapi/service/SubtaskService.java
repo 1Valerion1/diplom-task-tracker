@@ -37,35 +37,36 @@ public class SubtaskService {
         return subtaskRepository.save(newTask).getId();
     }
 
-    public List<Subtask> getSubtaskAll(){
+    public List<Subtask> getSubtaskAll() {
 
         return subtaskRepository.findAll();
     }
 
-    public List<SubtaskDTO> getSubtask(Task task){
+    public List<SubtaskDTO> getSubtask(Task task) {
         System.out.println(getTasksSubtasksEntities(task));
         return modelMapper.map(
                 getTasksSubtasksEntities(task),
-                new TypeToken<List<SubtaskDTO>>(){}.getType()
+                new TypeToken<List<SubtaskDTO>>() {
+                }.getType()
         );
     }
-    public List<Subtask> getTasksSubtasksEntities(Task task){
+
+    public List<Subtask> getTasksSubtasksEntities(Task task) {
         return subtaskRepository.getSubtasksByTask_Id(task.getId());
     }
-
 
 
     @Transactional
     public void updateTaskIfBelongsToUser(Task task, SubtaskDTO subtaskDTO) {
 
-        if (!subtaskRepository.existsByTaskIdAndId(subtaskDTO.getTaskId(), subtaskDTO.getId())){
+        if (!subtaskRepository.existsByTaskIdAndId(subtaskDTO.getTaskId(), subtaskDTO.getId())) {
             throw new NotFoundException();
         }
         Subtask subtask = subtaskRepository.findById(subtaskDTO.getId()).get();
-        if ((subtaskDTO.isCompleted() /*&& !task.isCompleted()*/)){
+        if ((subtaskDTO.isCompleted() /*&& !task.isCompleted()*/)) {
             completeSubtask(subtaskDTO);
 
-        } else if (subtaskDTO.isCompleted()){
+        } else if (subtaskDTO.isCompleted()) {
             updateCompletedTask(subtaskDTO);
 
         } else {
@@ -73,22 +74,21 @@ public class SubtaskService {
         }
 
     }
-    protected void updateTask(SubtaskDTO subtask){
+
+    protected void updateTask(SubtaskDTO subtask) {
         subtaskRepository.update(subtask.getId(), subtask.getTitle(), subtask.getDetails(), subtask.isCompleted(), null);
     }
 
-    protected void completeSubtask(SubtaskDTO subtask){
+    protected void completeSubtask(SubtaskDTO subtask) {
         subtaskRepository.update(subtask.getId(), subtask.getTitle(), subtask.getDetails(), subtask.isCompleted(), Timestamp.valueOf(LocalDateTime.now()));
     }
 
-    protected void updateCompletedTask(SubtaskDTO subtask){
+    protected void updateCompletedTask(SubtaskDTO subtask) {
         subtaskRepository.updateCompleted(subtask.getId(), subtask.getTitle(), subtask.getDetails());
     }
 
-
-    // Помни что если у подзадачи есть id, то его надо тоже учитвывать.
     @Transactional
-    public void deleteSubtask(Task task, Long uuid){
+    public void deleteSubtask(Task task, Long uuid) {
         if (subtaskRepository.existsByTaskIdAndId(task.getId(), uuid)) {
             deleteTaskByUUID(uuid);
             System.out.println("Subtask deleted successfully: " + uuid);
@@ -97,7 +97,8 @@ public class SubtaskService {
             throw new NotFoundException();//"Subtask not found"
         }
     }
-    protected void deleteTaskByUUID(Long uuid){
+
+    protected void deleteTaskByUUID(Long uuid) {
         subtaskRepository.deleteTaskById(uuid);
     }
 

@@ -1,0 +1,108 @@
+@import url('base.css');
+table th,
+table td {
+    border: 1px solid #333;
+    padding: 3px;
+    border-color: inherit;
+    border-style:solid;
+}
+
+table th {
+    text-align: center;
+}
+
+table td {
+    text-align: left;
+    vertical-align: inherit;
+}
+@media (max-width: 768px) {
+    header nav ul {
+        flex-direction: row;
+    }
+
+    header nav ul li {
+        margin-bottom: 5px;
+    }
+}
+
+/* Стили для карточек */
+.card {
+    background: #fff;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 600px;
+}
+
+.card-header {
+    width: 600px;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.card-content {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.card-content p {
+    padding-top:8px;
+    padding:5px;
+    text-indent: 20px; /* Отступ первой строки в абзаце */
+    text-align: justify;
+    margin-top: 20px;
+    margin-bottom: 20px; /* Отступ снизу после абзаца */
+
+}
+
+.long-text {
+    column-count: 3;
+    column-gap: 40px;
+}
+
+.card-link {
+    color: #007991;
+    text-decoration: none;
+}
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+form {
+    width: 30%; /* Ширина каждой формы */
+    background-color: #f8f8f8;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form h3, h4 {
+    text-align: center;
+    margin: 0 0 10px 0;
+    color: #007991;
+}
+
+button[type="button"] {
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+    background-color: #007991;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button[type="button"]:hover {
+    background-color: #005f6b;
+}
+

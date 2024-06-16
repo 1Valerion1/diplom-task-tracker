@@ -86,8 +86,6 @@ public class AuthenticationController {
         }
     }
 
-
-
     @Operation(description = "User authentication",
             responses = {
                     @ApiResponse(

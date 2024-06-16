@@ -22,6 +22,4 @@ public class VacancySkills {
     @JsonSerialize(as = Vacancy.class)
     @ManyToOne(fetch = FetchType.EAGER)
     private Vacancy vacancy;
-
-
 }

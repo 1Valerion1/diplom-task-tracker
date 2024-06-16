@@ -1,0 +1,147 @@
+@import url('base.css');
+
+thead{
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+th {
+    background-color: #f8f8f8;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.blockContent {
+    padding-top: 30px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.sidebar {
+    float: left;
+    width: 20%; /* Ширина боковой панели */
+    background-color: #fcfdff;
+    margin-top:10px;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.main-content {
+    float: left;
+    width: 80%; /* Ширина основного контента */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+select, button {
+    padding: 10px;
+    margin-top: 25px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #f2f2f2;
+}
+#pagination {
+    display: flex;
+    justify-content: center;
+    width: 90%; /* Подстроить под ширину таблицы */
+    margin: auto;
+}
+button {
+    flex-grow:4;
+    margin-top: 10px;
+}
+
+span{
+    margin-top: 20px;
+    text-align:center;
+    flex-grow: 1;
+}
+
+
+/* Media queries */
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        float: none;
+    }
+
+    .main-content {
+        width: 100%;
+        float: none;
+    }
+    table, .blockContent {
+        width: 100%;
+    }
+    header nav ul {
+        flex-direction: row;
+    }
+
+    header nav ul li {
+        margin-bottom: 5px;
+    }
+}
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+form {
+    width: 30%;
+    background-color: #f8f8f8;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form h3, h4 {
+    text-align: center;
+    margin: 0 0 10px 0;
+    color: #007991;
+}
+
+
+
+button[type="button"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007991;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button[type="button"]:hover {
+    background-color: #005f6b;
+}
+
