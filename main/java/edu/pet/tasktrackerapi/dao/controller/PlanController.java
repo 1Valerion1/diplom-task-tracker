@@ -24,42 +24,46 @@ public class PlanController {
     @GetMapping(produces = "application/json", value = "/getOne")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting plan")
-    public ResponseEntity<Plan> getPlan(@RequestParam Long id) {
+    @ResponseBody
+    public Plan getPlan(@RequestParam Long id) {
 
         System.out.println(plansService.getPlanId(id));
 
-        return ResponseEntity.ok(plansService.getPlanId(id));
+        return plansService.getPlanId(id);
     }
     @PreAuthorize("hasRole('ADMIN')") //@Secured
     @PostMapping(produces = "application/json", value = "/create")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Creating new plan")
-    public ResponseEntity<Long> createPlan(@RequestBody @Valid Plan plan) {
+    @ResponseBody
+    public Long createPlan(@RequestBody @Valid Plan plan) {
 
         Long planId = plansService.createPlan(plan);
 
-        return ResponseEntity.ok(planId);
+        return planId;
     }
 
 
     @PutMapping(value = "/update", produces = "application/json")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Updating existing plan")
-    public ResponseEntity<?> updatePlan(@RequestBody @Valid Plan plan) {
+    @ResponseBody
+    public Plan updatePlan(@RequestBody @Valid Plan plan) {
 
         plansService.updatePlan(plan);
 
-        return ResponseEntity.ok(plan);
+        return plan;
     }
 
     @DeleteMapping(path = "/delete/{uuid}", produces = "application/json")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Delete plan by id")
-    public ResponseEntity<?> deleteTask(@PathVariable Long uuid) {
+    @ResponseBody
+    public Long deleteTask(@PathVariable Long uuid) {
 
         plansService.deletePlan(uuid);
 
-        return ResponseEntity.ok(uuid);
+        return uuid;
     }
 
     @GetMapping

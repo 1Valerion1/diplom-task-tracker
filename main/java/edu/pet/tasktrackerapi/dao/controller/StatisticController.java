@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -45,6 +46,7 @@ public class StatisticController {
     @GetMapping(value = "/updateData", produces = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting Vacansy start update data")
+    @ResponseBody
     public ResponseEntity getVacancyJavJson() {
         String searchQuery = "Java";
         String URL = "https://api.hh.ru/vacancies";
@@ -77,17 +79,19 @@ public class StatisticController {
     @GetMapping(value = "/getStatistics")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting Vacansy all Skills info")
-    public ResponseEntity<List<VacancySkills>> getStatistic() {
+    @ResponseBody
+    public List<VacancySkills> getStatistic() {
 
-        return new ResponseEntity<>(vacancyService.getAllSkils(), HttpStatus.OK);
+        return vacancyService.getAllSkils();
     }
 
     @GetMapping(value = "/getVacansy")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting Vacansy all info")
-    public ResponseEntity<List<Vacancy>> getInfo() {
+    @ResponseBody
+    public List<Vacancy> getInfo() {
 
-        return new ResponseEntity<>(vacancyService.getallData(), HttpStatus.OK);
+        return vacancyService.getallData();
     }
 
     @SecurityRequirement(name = "Bearer Authentication")

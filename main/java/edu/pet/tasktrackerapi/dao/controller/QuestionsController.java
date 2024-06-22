@@ -30,55 +30,60 @@ public class QuestionsController {
     @GetMapping(produces = "application/json" , value = "/getAll")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting a list of questions")
-    public ResponseEntity<List<Questions>> getAllQuest(){
+    @ResponseBody
+    public List<Questions> getAllQuest(){
 
         //  System.out.println(questionsService.getAllQuestions());
 
-        return ResponseEntity.ok(questionsService.getAllQuestions());
+        return questionsService.getAllQuestions();
     }
     @GetMapping(produces = "application/json" , value = "/getQuestionsThemes")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting questions on a theme")
-    public ResponseEntity<List<Questions>> getQuestionsThemes(@RequestParam Long themeId){
+    @ResponseBody
+    public List<Questions> getQuestionsThemes(@RequestParam Long themeId){
         System.out.println(questionsService.getThemeQuestions(themeId));
-        return ResponseEntity.ok(questionsService.getThemeQuestions(themeId));
+        return questionsService.getThemeQuestions(themeId);
     }
 
     @PostMapping(produces = "application/json" , value = "/create")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Creating new quest")
-    public ResponseEntity<Long> createQuest(@RequestBody @Valid Questions quest){
+    @ResponseBody
+    public Long createQuest(@RequestBody @Valid Questions quest){
         List<Theme> themes =  themesSevice.findByName(quest.getNameThemes());
-        if(themes.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+//        if(themes.isEmpty()){
+//            return ResponseEntity.notFound().build();
+//        }
         Theme theme = themes.get(0);
         quest.setTheme(theme);
 
         Long questId = questionsService.createQuestions(quest);
 
-        return ResponseEntity.ok(questId);
+        return questId;
     }
 
     @PutMapping(value = "/update", produces = "application/json")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Updating existing quest")
-    public ResponseEntity<?> updateQuest(@RequestBody @Valid Questions quest){
+    @ResponseBody
+    public Questions updateQuest(@RequestBody @Valid Questions quest){
 
         questionsService.updateQuestions(quest);
 
-        return ResponseEntity.ok(quest);
+        return quest;
     }
 
     @DeleteMapping(path = "/delete/{uuid}", produces = "application/json")
     // @PreAuthorize("hasRole('ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Delete quest by id")
-    public ResponseEntity<Long> deleteQuest(@AuthenticationPrincipal Theme theme, @PathVariable Long uuid){
+    @ResponseBody
+    public Long deleteQuest(@AuthenticationPrincipal Theme theme, @PathVariable Long uuid){
 
         questionsService.deleteQuest(theme, uuid);
 
-        return ResponseEntity.ok(uuid);
+        return uuid;
     }
 
     @GetMapping

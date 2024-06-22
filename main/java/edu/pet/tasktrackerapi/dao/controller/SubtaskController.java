@@ -31,55 +31,58 @@ public class SubtaskController {
     @GetMapping(produces = "application/json" , value = "/getAll")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting all list of subtasks")
-    public ResponseEntity<List<Subtask>> getSubtasksAll(){
+    @ResponseBody
+    public List<Subtask> getSubtasksAll(){
 
         System.out.println(subtaskService.getSubtaskAll());
 
-        return ResponseEntity.ok(subtaskService.getSubtaskAll());
+        return subtaskService.getSubtaskAll();
     }
 
     @GetMapping(produces = "application/json" , value = "/getOne")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting list of subtasks")
-    public ResponseEntity<List<SubtaskDTO>> getSubtasks(@RequestParam("taskId") Long taskId){
+    @ResponseBody
+    public List<SubtaskDTO> getSubtasks(@RequestParam("taskId") Long taskId){
         Task task = taskService.getIdTask(taskId); // Предполагается, что у вас есть метод для получения Task по id
-        if (task == null) {
-            return ResponseEntity.notFound().build();
-        }
+//        if (task == null) {
+//            return ResponseEntity.notFound().build();
+//        }
         System.out.println(subtaskService.getSubtask(task));;
 
-        return ResponseEntity.ok(subtaskService.getSubtask(task));
+        return subtaskService.getSubtask(task);
     }
 
     @PostMapping(produces = "application/json" , value = "/create")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Creating new task")
-    public ResponseEntity<Long> createSubtasks(@AuthenticationPrincipal Task task, @RequestBody @Valid NewTaskRequest newTaskRequest){
+    @ResponseBody
+    public Long createSubtasks(@AuthenticationPrincipal Task task, @RequestBody @Valid NewTaskRequest newTaskRequest){
 
         Long taskId = subtaskService.createSubtask(task, newTaskRequest);
 
-        return ResponseEntity.ok(taskId);
+        return taskId;
     }
-
-
     @PutMapping(value = "/update", produces = "application/json")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Updating existing subtask")
-    public ResponseEntity<SubtaskDTO> updateSubtask(@AuthenticationPrincipal Task task, @RequestBody @Valid SubtaskDTO subtaskDTO){
+    @ResponseBody
+    public SubtaskDTO updateSubtask(@AuthenticationPrincipal Task task, @RequestBody @Valid SubtaskDTO subtaskDTO){
 
         subtaskService.updateTaskIfBelongsToUser(task, subtaskDTO);
 
-        return ResponseEntity.ok(subtaskDTO);
+        return subtaskDTO;
     }
 
     @DeleteMapping(path = "/delete/{uuid}", produces = "application/json")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Delete task by id")
-    public ResponseEntity<Long> deleteSubtask(@AuthenticationPrincipal Task task, @PathVariable Long uuid){
+    @ResponseBody
+    public Long deleteSubtask(@AuthenticationPrincipal Task task, @PathVariable Long uuid){
 
         subtaskService.deleteSubtask(task, uuid);
 
-        return ResponseEntity.ok(uuid);
+        return uuid;
     }
 
 

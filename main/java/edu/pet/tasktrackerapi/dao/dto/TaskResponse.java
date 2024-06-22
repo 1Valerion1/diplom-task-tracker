@@ -25,13 +25,13 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Schema(description = "Информация о задаче(ах) пользователя")
 public class TaskResponse implements Serializable{
-    @NotBlank
+
     private Long id;
     @NotBlank
     private String title;
     @NotNull
     private String details;
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     private  Priorities priorities;
 
