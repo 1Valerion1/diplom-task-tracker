@@ -19,12 +19,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Schema(description = "Information about subtask is task")
 public class SubtaskDTO implements Serializable  {
-
+    @NotBlank
     private Long id;
+    @NotBlank
     private Long taskId;
     @NotBlank
     private String title;
-    @NotNull
+    @NotBlank
     private String details;
     @Column
     @Enumerated(EnumType.STRING)

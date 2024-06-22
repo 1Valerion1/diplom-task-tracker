@@ -1,7 +1,7 @@
 package edu.pet.tasktrackerapi.service;
 
 import edu.pet.tasktrackerapi.dao.dto.NewTaskRequest;
-import edu.pet.tasktrackerapi.dao.dto.TaskDto;
+import edu.pet.tasktrackerapi.dao.dto.TaskResponse;
 import edu.pet.tasktrackerapi.model.Task;
 import edu.pet.tasktrackerapi.model.User;
 import edu.pet.tasktrackerapi.dao.exception.NotFoundException;
@@ -44,11 +44,11 @@ public class TaskService {
         return task;
     }
 
-    public List<TaskDto> getUsersTasksDto(User user) {
+    public List<TaskResponse> getUsersTasksDto(User user) {
         System.out.println(getUsersTasksEntities(user));
         return modelMapper.map(
                 getUsersTasksEntities(user),
-                new TypeToken<List<TaskDto>>() {
+                new TypeToken<List<TaskResponse>>() {
                 }.getType()
         );
     }
@@ -58,7 +58,7 @@ public class TaskService {
     }
 
     @Transactional
-    public void updateTaskIfBelongsToUser(User user, TaskDto taskDto) {
+    public void updateTaskIfBelongsToUser(User user, TaskResponse taskDto) {
         if (!taskRepository.existsByUserAndId(user, taskDto.getId())) {
             throw new NotFoundException();
         }
@@ -75,17 +75,17 @@ public class TaskService {
 
     }
 
-    protected void updateTask(TaskDto task) {
+    protected void updateTask(TaskResponse task) {
         taskRepository.update(task.getId(), task.getTitle(), task.getDetails(),
                 task.isCompleted(), null, task.getPriorities());
     }
 
-    protected void completeTask(TaskDto task) {
+    protected void completeTask(TaskResponse task) {
         taskRepository.update(task.getId(), task.getTitle(), task.getDetails(),
                 task.isCompleted(), Timestamp.valueOf(LocalDateTime.now()), task.getPriorities());
     }
 
-    protected void updateCompletedTask(TaskDto task) {
+    protected void updateCompletedTask(TaskResponse task) {
         taskRepository.updateCompleted(task.getId(), task.getTitle(), task.getDetails(), task.getPriorities());
     }
 

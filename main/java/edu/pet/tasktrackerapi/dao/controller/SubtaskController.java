@@ -25,11 +25,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Tag(name = "Subtasks", description = "Methods for subtask management")
 public class SubtaskController {
-    @Autowired
-    private  SubtaskService subtaskService;
-    @Autowired
-    private TaskService taskService;
-//
+    private  final SubtaskService subtaskService;
+    private final TaskService taskService;
+
     @GetMapping(produces = "application/json" , value = "/getAll")
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(description = "Getting all list of subtasks")

@@ -17,11 +17,11 @@ import org.springframework.context.annotation.Configuration;
         scheme = "bearer"
 )
 public class SpringdocConfig {
-    //todo вынести в config-файл
     //http://localhost:8080/swagger-ui/index.html#/
-    private final String DOC_TITLE = "Task-tracker-api documentation";
+    private final String DOC_TITLE = "Документация по планировщику ";
     private final String DOC_VERSION = "1.0.0";
-    private final String DOC_DESCRIPTION = "";
+    private final String DOC_DESCRIPTION = "Данный проект реализует в себе возможности простого планировщика " +
+            "и части элементов для подготовки к работе.";
     @Bean
     public OpenAPI baseOpenApi(){
         return new OpenAPI()

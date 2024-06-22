@@ -8,9 +8,11 @@ import java.util.Map;
 
 public interface HHService {
 
-    public ArrayList<Integer> idVacancies(ResponseEntity<String> responseHH, UriComponentsBuilder quereParams); // массив id
+    public ArrayList<Integer> idVacancies(ResponseEntity<String> responseHH, UriComponentsBuilder quereParams);
 
     public Map<String, Integer> countAllSkills(ArrayList<Integer> skillsId);
+    public Map<String, Integer> SkillsKey(ResponseEntity<String> response);
+    public Map<String, Integer> sortAndLimit(Map<String, Integer> map);
 
 
-}
+    }

@@ -1,6 +1,6 @@
-package edu.pet.tasktrackerapi.dao.rabbitmq.service;
+package edu.pet.tasktrackerapi.rabbitmq.service;
 
-import edu.pet.tasktrackerapi.dao.rabbitmq.dto.EmailDto;
+import edu.pet.tasktrackerapi.rabbitmq.dto.EmailDto;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -7,8 +7,9 @@ import edu.pet.tasktrackerapi.auth.dto.AuthenticationResponse;
 import edu.pet.tasktrackerapi.auth.dto.RegisterRequest;
 import edu.pet.tasktrackerapi.auth.service.AuthenticationService;
 import edu.pet.tasktrackerapi.dao.exception.PasswordsNotSameException;
-import edu.pet.tasktrackerapi.dao.rabbitmq.producer.RabbitMessageSender;
+import edu.pet.tasktrackerapi.rabbitmq.producer.RabbitMessageSender;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,12 +26,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-@Tag(name = "JWT-security", description = "Methods for registration and authentication")
+@Tag(name = "JWT-security", description = "Методы регистрации и аутентификации")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
     private final RabbitMessageSender rabbitMessageSender;
-    @Operation(description = "New user registration",
+    @Operation(description = "Регистрирует нового пользователя",
     responses = {
             @ApiResponse(
                     responseCode = "200",
@@ -66,7 +67,6 @@ public class AuthenticationController {
                     )
             )
         })
-
     @PostMapping(value = "/register", produces="application/json")
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest registerRequest) throws JsonProcessingException {
 
@@ -86,7 +86,7 @@ public class AuthenticationController {
         }
     }
 
-    @Operation(description = "User authentication",
+    @Operation(description = "Аутентификация пользователя",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -138,7 +138,7 @@ public class AuthenticationController {
         // Обновление данных пользователя
         return ResponseEntity.ok("Profile updated successfully");
     }
-
+    @Operation(hidden = true)
     @GetMapping
     public String showAutorize(Model model) {
         return "autorize";

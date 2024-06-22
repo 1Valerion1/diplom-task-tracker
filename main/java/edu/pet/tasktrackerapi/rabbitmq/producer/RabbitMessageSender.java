@@ -1,9 +1,9 @@
-package edu.pet.tasktrackerapi.dao.rabbitmq.producer;
+package edu.pet.tasktrackerapi.rabbitmq.producer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.pet.tasktrackerapi.dao.rabbitmq.dto.EmailDto;
-import edu.pet.tasktrackerapi.dao.rabbitmq.service.RabbitMessageCreator;
+import edu.pet.tasktrackerapi.rabbitmq.dto.EmailDto;
+import edu.pet.tasktrackerapi.rabbitmq.service.RabbitMessageCreator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;

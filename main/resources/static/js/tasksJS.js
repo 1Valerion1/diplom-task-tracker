@@ -1,0 +1,212 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const jsonData = {};
+        for (const [key, value] of formData.entries()) {
+            if (key === 'completed') {
+                jsonData[key] = value === 'on';
+            } else {
+                jsonData[key] = value;
+            }
+        }
+
+        // Извлекаем токен из localStorage
+        const token = localStorage.getItem('token');
+
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Добавляем токен в заголовок Authorization
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(jsonData)
+        })
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+            .then(data => {
+            console.log(data);
+            // Обработка успешного ответа
+        })
+            .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+            // Обработка ошибок сети
+        });
+    });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const token = localStorage.getItem('token');
+
+    fetch('/api/v1/tasks/get', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+        .then(tasks => {
+
+        const tasksContainer = document.querySelector('#tasksContainer');
+        tasks.forEach(task => {
+
+            const taskElement = document.createElement('div');
+            taskElement.classList.add('task-item');
+            taskElement.setAttribute('data-id', task.id);
+            taskElement.innerHTML = `
+                <p>Название: ${task.title}</p>
+                <p>Описание: ${task.details}</p>
+                <p>Приоритет: ${task.priorities}</p>
+                <p>Состояние задачи: ${task.completed ? 'Выполнено' : 'Не выполнено'}</p>
+                <div class="subtasks-container"></div>
+                <div class="task-actions">
+                    <button type="button" onclick="openEditForm(this)">Редактировать</button>
+                    <button type="button" onclick="deleteTask(${task.id})">Удалить</button>
+                </div>
+            `;
+            tasksContainer.appendChild(taskElement);
+
+            // Для каждой задачи выполняем запрос на получение подзадач
+            fetch(`/api/v1/subtasks/getOne?taskId=${task.id}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(subtaskResponse => {
+                if (!subtaskResponse.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return subtaskResponse.json();
+            })
+                .then(subtasks => {
+                // Добавляем подзадачи в контейнер подзадач
+                const subtasksContainer = taskElement.querySelector('.subtasks-container');
+                subtasks.forEach(subtask => {
+                    const subtaskElement = document.createElement('div');
+                    subtaskElement.classList.add('subtask-item');
+                    subtaskElement.innerHTML = `
+                        <p>Подзадача: ${subtask.title}</p>
+                        <p>Описание: ${subtask.details}</p>
+                        <p>Приоритет: ${subtask.priorities}</p>
+                        <p>Состояние подзадачи: ${subtask.completed ? 'Выполнено' : 'Не выполнено'}</p>
+                    `;
+                    subtasksContainer.appendChild(subtaskElement);
+                });
+            })
+                .catch(subtaskError => {
+                console.error('There has been a problem with your fetch operation:', subtaskError);
+            });
+        });
+    })
+        .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+    });
+});
+
+// Функция для открытия формы редактирования
+function openEditForm(button) {
+    const taskElement = button.closest('.task-item');
+    const taskId = taskElement.getAttribute('data-id');
+    const taskTitle = taskElement.querySelector('p:nth-child(1)').textContent.replace('Название: ', '');
+    const taskDetails = taskElement.querySelector('p:nth-child(2)').textContent.replace('Описание: ', '');
+    const taskPriorities = taskElement.querySelector('p:nth-child(3)').textContent.replace('Приоритет: ', '');
+    const taskCompleted = taskElement.querySelector('p:nth-child(4)').textContent.includes('Выполнено');
+
+    // Заполняем форму текущими данными задачи
+    document.querySelector('#editTaskId').value = taskId;
+    document.querySelector('#editTaskTitle').value = taskTitle;
+    document.querySelector('#editTaskDetails').value = taskDetails;
+    document.querySelector('#editTaskPriority').value = taskPriorities;
+    document.querySelector('#editTaskCompleted').checked = taskCompleted;
+
+    // Показываем форму редактирования
+    document.querySelector('#editFormContainer').style.display = 'block';
+}
+
+// Функция для отправки формы редактирования
+function submitEditForm() {
+    const token = localStorage.getItem('token');
+    const taskId = document.querySelector('#editTaskId').value;
+    const taskTitle = document.querySelector('#editTaskTitle').value;
+    const taskDetails = document.querySelector('#editTaskDetails').value;
+    const taskPriority = document.querySelector('#editTaskPriority').value;
+    const taskCompleted = document.querySelector('#editTaskCompleted').checked;
+
+    // Создаем объект с обновленными данными задачи
+    const updatedTask = {
+        id: taskId,
+        title: taskTitle,
+        details: taskDetails,
+        priorities: taskPriority,
+        completed: taskCompleted
+    };
+
+    console.log('Отправляемые данные:', updatedTask);
+
+    // Отправляем запрос на обновление задачи
+    fetch(`/api/v1/tasks/update`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedTask)
+    })
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+        .then(updatedTask => {
+        console.log('Задача обновлена:', updatedTask);
+        // Обновляем DOM здесь
+        const taskElement = document.querySelector(`[data-id="${updatedTask.id}"]`);
+        taskElement.querySelector('p:nth-child(1)').textContent = `Название: ${updatedTask.title}`;
+        taskElement.querySelector('p:nth-child(2)').textContent = `Описание: ${updatedTask.details}`;
+        taskElement.querySelector('p:nth-child(3)').textContent = `Приоритет: ${updatedTask.priorities}`;
+        taskElement.querySelector('p:nth-child(4)').textContent = `Состояние задачи: ${updatedTask.completed ? 'Выполнено' : 'Не выполнено'}`;
+        // Скрываем форму редактирования
+        document.querySelector('#editFormContainer').style.display = 'none';
+    })
+        .catch(error => {
+        console.error('Ошибка при обновлении задачи:', error);
+    });
+}
+
+// Функция для удаления задачи
+function deleteTask(taskId) {
+    const token = localStorage.getItem('token');
+    fetch(`/api/v1/tasks/delete/${taskId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+        .then(() => {
+        console.log('Задача удалена');
+    })
+        .catch(error => {
+        console.error('Ошибка при удалении задачи:', error);
+    });
+}

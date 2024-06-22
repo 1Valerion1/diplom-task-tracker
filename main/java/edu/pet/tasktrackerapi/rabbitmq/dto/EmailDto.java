@@ -1,4 +1,4 @@
-package edu.pet.tasktrackerapi.dao.rabbitmq.dto;
+package edu.pet.tasktrackerapi.rabbitmq.dto;
 
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;

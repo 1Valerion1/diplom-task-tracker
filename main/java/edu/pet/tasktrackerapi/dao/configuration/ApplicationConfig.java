@@ -31,7 +31,6 @@ public class ApplicationConfig {
 //                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 //    }
 
-    // Блядь, он принимает имя пользователя а не логин в этом и ошибка
     @Bean
     public UserDetailsService userDetailsService(){
 

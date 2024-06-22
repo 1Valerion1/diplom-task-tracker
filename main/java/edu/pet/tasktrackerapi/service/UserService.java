@@ -14,7 +14,6 @@ import java.util.function.Supplier;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
     private final ModelMapper modelMapper;
 
     public UserDto getUserInfo(User user) {

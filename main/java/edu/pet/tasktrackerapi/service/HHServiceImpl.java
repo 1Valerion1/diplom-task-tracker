@@ -2,6 +2,7 @@ package edu.pet.tasktrackerapi.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,10 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class HHServiceImpl implements HHService {
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @Override
     public ArrayList<Integer> idVacancies(ResponseEntity<String> responseHH, UriComponentsBuilder queryParams) {
@@ -88,14 +89,16 @@ public class HHServiceImpl implements HHService {
         }
         // Сортируем и ограничиваем количество записей до 100
         Map<String, Integer> sortedSkillsKey = sortAndLimit(skillsKey);
-        //Map<String, Integer> sortedSkillsDesc = sortAndLimit(skillsDesc);
-
 
         return sortedSkillsKey;
     }
 
-    private Map<String, Integer> sortAndLimit(Map<String, Integer> map) {
-        return map.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).limit(100).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+    public Map<String, Integer> sortAndLimit(Map<String, Integer> map) {
+        return map.entrySet()
+                .stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                .limit(100)
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
     }
 
     public Map<String, Integer> SkillsKey(ResponseEntity<String> response) {

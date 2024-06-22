@@ -21,7 +21,7 @@ public class NewTaskRequest implements Serializable {
     private String title;
     @NotNull
     private String details;
-    @NotNull
+    @NotBlank
     @Enumerated(EnumType.STRING)
     private Priorities priorities;
 

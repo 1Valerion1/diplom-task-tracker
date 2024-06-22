@@ -20,5 +20,5 @@ public class UserDto implements Serializable {
     private Long id;
     private String email;
     private String username;
-    private List<TaskDto> tasks;
+    private List<TaskResponse> tasks;
 }

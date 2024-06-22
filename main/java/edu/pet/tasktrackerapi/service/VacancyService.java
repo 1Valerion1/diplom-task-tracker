@@ -5,6 +5,7 @@ import edu.pet.tasktrackerapi.dao.repository.parserHH.VacancyRepository;
 import edu.pet.tasktrackerapi.dao.repository.parserHH.VacancySkillsRepository;
 import edu.pet.tasktrackerapi.model.Vacancy;
 import edu.pet.tasktrackerapi.model.VacancySkills;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +13,10 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class VacancyService {
-    @Autowired
-    private VacancySkillsRepository vacancySkillRepository;
-    @Autowired
-    private VacancyRepository vacancyRepository;
+    private final VacancySkillsRepository vacancySkillRepository;
+    private final VacancyRepository vacancyRepository;
 
     public void saveSkills(Map<String, Integer> skillsKey, Vacancy vac) {
         for (Map.Entry<String, Integer> entry : skillsKey.entrySet()) {

@@ -62,9 +62,9 @@ public class UserController {
 
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping(value = "/getUser", produces = "application/json")
-    public ResponseEntity<UserDto> getUser(@AuthenticationPrincipal User user){
+    public UserDto getUser(@AuthenticationPrincipal User user){
 
-       return ResponseEntity.ok(userService.getUserInfo(user));
+       return userService.getUserInfo(user);
     }
 
     @GetMapping

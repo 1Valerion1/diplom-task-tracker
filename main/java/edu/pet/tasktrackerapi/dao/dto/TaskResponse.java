@@ -8,10 +8,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * A DTO for the {@link Task} entity
@@ -19,19 +21,21 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 //@RequiredArgsConstructor
+@Builder
 @AllArgsConstructor
-@Schema(description = "Information about Task")
-public class TaskDto implements Serializable{
-
+@Schema(description = "Информация о задаче(ах) пользователя")
+public class TaskResponse implements Serializable{
+    @NotBlank
     private Long id;
     @NotBlank
     private String title;
     @NotNull
     private String details;
-
+    @NotBlank
     @Enumerated(EnumType.STRING)
     private  Priorities priorities;
 
-
     private boolean completed;
+    private Timestamp completedAt;
+
 }

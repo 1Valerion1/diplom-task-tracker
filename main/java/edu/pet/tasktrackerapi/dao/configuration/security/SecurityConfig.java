@@ -23,10 +23,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-
                 .csrf()
                 .disable()
-
                 .authorizeHttpRequests((authz) -> authz
                       //  .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/auth/**").permitAll()
@@ -42,8 +40,6 @@ public class SecurityConfig {
         return http
                 .build();
     }
-
-
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
