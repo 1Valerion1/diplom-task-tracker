@@ -34,7 +34,7 @@
                 <option value="MEDIUM">Средний</option>
                 <option value="HIGH">Высокий</option>
             </select>
-            <input type="checkbox" name="completed"/> Задача выполнена
+<!--            <input type="checkbox" name="completed"/> Задача выполнена-->
             <button type="submit">Добавить</button>
         </form>
 
@@ -42,9 +42,8 @@
     <!-- Форма для получения всех задач пользователя -->
     <div id="tasksContainer">
         <h3>Список задач</h3>
-
     </div>
-    <div id="editFormContainer" style="display:none;">
+    <div id="editFormContainer" >
         <input type="hidden" id="editTaskId">
         <input type="text" id="editTaskTitle" placeholder="Название задачи">
         <textarea id="editTaskDetails" placeholder="Описание задачи"></textarea>

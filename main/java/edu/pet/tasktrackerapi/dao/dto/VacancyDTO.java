@@ -2,47 +2,21 @@ package edu.pet.tasktrackerapi.dao.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 public class VacancyDTO {
     @JsonProperty("profession")
+    @NotBlank
     private String profession;
     @JsonProperty("found")
+    @NotEmpty
     private int numberVacancies;
     @JsonProperty("alternate_url")
+    @NotEmpty
     private String alternateUrl;
-
-    public VacancyDTO() {
-    }
-
-    public VacancyDTO(String profession, int numberVacancies, String alternateUrl) {
-        this.profession = profession;
-        this.numberVacancies = numberVacancies;
-        this.alternateUrl = alternateUrl;
-    }
-
-    public String getProfession() {
-        return profession;
-    }
-
-    public void setProfession(String profession) {
-        this.profession = profession;
-    }
-
-    public int getNumberVacancies() {
-        return numberVacancies;
-    }
-
-    public void setNumberVacancies(int numberVacancies) {
-        this.numberVacancies = numberVacancies;
-    }
-
-    public String getAlternateUrl() {
-        return alternateUrl;
-    }
-
-    public void setAlternateUrl(String alternateUrl) {
-        this.alternateUrl = alternateUrl;
-    }
 
 }

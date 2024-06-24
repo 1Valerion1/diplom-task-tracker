@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Schema(description = "Server response for authentication/registration request")
 public class AuthenticationResponse {
-    @Schema(description = "JWT-token")
+    @Schema(description = "JWT-token", example = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMjUwNj...")
     private String token;
 }

@@ -11,20 +11,16 @@ import lombok.*;
 import java.io.Serializable;
 
 @Data
-@RequiredArgsConstructor
 @AllArgsConstructor
-@Setter
-@Getter
+@NoArgsConstructor
 @Schema(description = "Information about new Task")
 public class NewTaskRequest implements Serializable {
     @NotBlank
     private String title;
     @NotNull
     private String details;
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Priorities priorities;
-
-    private boolean completed;
 
 }

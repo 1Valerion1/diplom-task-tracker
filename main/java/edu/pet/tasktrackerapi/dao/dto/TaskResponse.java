@@ -20,7 +20,6 @@ import java.sql.Timestamp;
  */
 @Data
 @NoArgsConstructor
-//@RequiredArgsConstructor
 @Builder
 @AllArgsConstructor
 @Schema(description = "Информация о задаче(ах) пользователя")

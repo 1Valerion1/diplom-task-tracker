@@ -15,7 +15,6 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 @Data
-        //@RequiredArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Information about subtask is task")
 public class SubtaskDTO implements Serializable  {

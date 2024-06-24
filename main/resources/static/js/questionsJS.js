@@ -1,8 +1,7 @@
 let currentPage = 1;
-const questionsPerPage = 50;
-
-// Глобальная переменная для хранения всех вопросов
 let allQuestions = [];
+
+const questionsPerPage = 50;
 
 function nextPage() {
     currentPage++;
@@ -114,7 +113,7 @@ function fetchThemes() {
 }
 
 function fetchQuestionsByTheme() {
-    const themeIdString = document.querySelectorAll('.themeSelect');
+    const themeSelectElements = document.querySelectorAll('.themeSelect');
     themeSelectElements.forEach(themeSelect => {
         const themeIdString = themeSelect.value;
         let url = 'http://localhost:8081/api/v1/questions/';
@@ -126,8 +125,16 @@ function fetchQuestionsByTheme() {
         }
 
         fetch(url)
-            .then(response => response.json())
-            .then(questions => populateQuestions(questions))
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+            .then(questions => {
+            console.log('Fetched questions:', questions);
+            populateQuestions(questions);
+        })
             .catch(error => console.error('Error:', error));
     });
 }
@@ -136,12 +143,21 @@ function fetchQuestionsByTheme() {
 function populateQuestions(questions) {
     const tableBody = document.querySelector('table tbody');
     tableBody.innerHTML = '';
+
+    if (!Array.isArray(questions)) {
+        console.error('Expected an array but got:', questions);
+        return;
+    }
+
     questions.forEach(question => {
         const row = `<tr>
             <td>${question.nameThemes}</td>
             <td>${question.titleQuestions}</td>
-             <td>${question.links}</td>
+            <td>${question.links}</td>
+            <td><button onclick="showUpdateForm(${question.id})">Обновить</button></td>
+            <td><button onclick="showDeleteForm(${question.id})">Удалить</button></td>
         </tr>`;
+        console.log('Appending row:', row);
         tableBody.innerHTML += row;
     });
 }

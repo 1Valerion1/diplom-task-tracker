@@ -13,7 +13,6 @@ import java.util.List;
  * A DTO for the {@link User} entity
  */
 @Data
-@RequiredArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Information about User")
 public class UserDto implements Serializable {

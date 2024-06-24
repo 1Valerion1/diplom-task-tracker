@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // Добавляем токен в заголовок Authorization
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(jsonData)
@@ -32,11 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
         })
             .then(data => {
             console.log(data);
-            // Обработка успешного ответа
         })
             .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
-            // Обработка ошибок сети
         });
     });
 });
@@ -79,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             tasksContainer.appendChild(taskElement);
 
-            // Для каждой задачи выполняем запрос на получение подзадач
             fetch(`/api/v1/subtasks/getOne?taskId=${task.id}`, {
                 method: 'GET',
                 headers: {
@@ -126,14 +122,12 @@ function openEditForm(button) {
     const taskPriorities = taskElement.querySelector('p:nth-child(3)').textContent.replace('Приоритет: ', '');
     const taskCompleted = taskElement.querySelector('p:nth-child(4)').textContent.includes('Выполнено');
 
-    // Заполняем форму текущими данными задачи
     document.querySelector('#editTaskId').value = taskId;
     document.querySelector('#editTaskTitle').value = taskTitle;
     document.querySelector('#editTaskDetails').value = taskDetails;
     document.querySelector('#editTaskPriority').value = taskPriorities;
     document.querySelector('#editTaskCompleted').checked = taskCompleted;
 
-    // Показываем форму редактирования
     document.querySelector('#editFormContainer').style.display = 'block';
 }
 
@@ -146,7 +140,6 @@ function submitEditForm() {
     const taskPriority = document.querySelector('#editTaskPriority').value;
     const taskCompleted = document.querySelector('#editTaskCompleted').checked;
 
-    // Создаем объект с обновленными данными задачи
     const updatedTask = {
         id: taskId,
         title: taskTitle,
@@ -157,7 +150,6 @@ function submitEditForm() {
 
     console.log('Отправляемые данные:', updatedTask);
 
-    // Отправляем запрос на обновление задачи
     fetch(`/api/v1/tasks/update`, {
         method: 'PUT',
         headers: {

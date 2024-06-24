@@ -3,8 +3,8 @@
 <head>
     <meta content="text/html" ; charset="UTF-8">
     <title>Статистика по вакансии</title>
-    <link rel="icon" th:src="@{/images/ourbor.png}"/>
     <link th:href="@{/styles/questionsStyle.css}" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" th:src="@{/js/questionsJS.js}"> </script>
 
 </head>
 <body>
@@ -23,51 +23,41 @@
     </nav>
 </header>
 <main>
-    <h3>Панель администратора</h3>
+<!--    <h3>Панель администратора</h3>-->
 
-    <div class="form-container">
-        <form id="createForm">
-            <h3>Добавить вопрос</h3>
+<!--    <div class="form-container">-->
+<!--        <form id="createForm">-->
+<!--            <h3>Добавить вопрос</h3>-->
 
-            <input type="text" id="title" placeholder="Заголовок вопроса" />
-            <textarea id="answer" placeholder="Ответ"></textarea>
-            <select class="themeSelect">
-                <option value="">-- Выберите тему --</option>
-            </select>
-            <input type="text" id="links" placeholder="Ссылка" />
-            <button type="button" onclick="createQuestion()">Добавить</button>
-            <div class="message-box" id="createMessage"></div>
-        </form>
-
-
-        <form id="updateForm" style="display;">
-            <h3>Обновить вопрос</h3>
-            <input type="hidden" id="updateId" />
-            <input type="text" id="updateTitle" placeholder="Заголовок вопроса" />
-            <textarea id="updateAnswer" placeholder="Ответ"></textarea>
-            <select class="themeSelect">
-                <option value="">-- Выберите тему --</option>
-            </select>
-            <input type="text" id="updateLinks" placeholder="Ссылка" />
-            <button type="button" onclick="updateQuestion()">Обновить</button>
-            <div class="message-box" id="updateMessage"></div>
-        </form>
-
-<!--        <form id="deleteForm" style="display;">-->
-<!--            <h3>Удалить вопрос</h3>-->
-<!--            <input type="text" id="deleteId" placeholder="ID вопроса" />-->
-<!--            <button type="button" onclick="deleteQuestion()">Удалить</button>-->
-<!--            <div class="message-box" id="deleteMessage"></div>-->
+<!--            <input type="text" id="title" placeholder="Заголовок вопроса" />-->
+<!--            <textarea id="answer" placeholder="Ответ"></textarea>-->
+<!--            <select class="themeSelect">-->
+<!--                <option value="">&#45;&#45; Выберите тему &#45;&#45;</option>-->
+<!--            </select>-->
+<!--            <input type="text" id="links" placeholder="Ссылка" />-->
+<!--            <button type="button" onclick="createQuestion()">Добавить</button>-->
+<!--            <div class="message-box" id="createMessage"></div>-->
 <!--        </form>-->
-    </div>
 
-    <!-- Боковая панель для выбора темы -->
+
+<!--        <form id="updateForm">-->
+<!--            <h3>Обновить вопрос</h3>-->
+<!--            <input type="hidden" id="updateId" />-->
+<!--            <input type="text" id="updateTitle" placeholder="Заголовок вопроса" />-->
+<!--            <textarea id="updateAnswer" placeholder="Ответ"></textarea>-->
+<!--            <select class="themeSelect">-->
+<!--                <option value="">&#45;&#45; Выберите тему &#45;&#45;</option>-->
+<!--            </select>-->
+<!--            <input type="text" id="updateLinks" placeholder="Ссылка" />-->
+<!--            <button type="button" onclick="updateQuestion()">Обновить</button>-->
+<!--            <div class="message-box" id="updateMessage"></div>-->
+<!--        </form>-->
+<!--    </div>-->
+
     <div class="sidebar">
         <h3>Фильтр тем:</h3>
         <select class="themeSelect">
-            <option value="">-- Выберите тему --</option>
             <option value="all">Все</option>
-            <!--            <option th:each="theme : ${themes}" th:value="${theme.id}" th:text="${theme.name}">Тема 1</option>-->
         </select>
         <button onclick="fetchQuestionsByTheme()">Применить фильтр</button>
     </div>
@@ -94,11 +84,11 @@
                 </tbody>
             </table>
         </div>
-        <div id="pagination">
-            <button onclick="previousPage()">Предыдущая</button>
-            <span id="page-number">1</span>
-            <button onclick="nextPage()">Следующая</button>
-        </div>
+<!--        <div id="pagination">-->
+<!--            <button onclick="previousPage()">Предыдущая</button>-->
+<!--            <span id="page-number">1</span>-->
+<!--            <button onclick="nextPage()">Следующая</button>-->
+<!--        </div>-->
 
     </div>
 </main>
@@ -106,7 +96,5 @@
 <footer>
     <p id="foot">© 2024 OuroborosOdyssey. Все права защищены.</p>
 </footer>
-
-<script type="text/javascript" th:src="@{/js/questions.js}"> </script>
 </body>
 </html>

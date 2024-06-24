@@ -17,9 +17,8 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    //TODO change + move to application props + .env file
-    private static final String SECRET_KEY = "66652B586E3272357538782F413F4428472B4B6250655368566D597133733676";
-    private static final Integer EXPIRATION_TIME_MILLS = 1000 * 60 * 1;
+    private static final String SECRET_KEY = "66652B586E32723DFG353TS3232F413F4428472B4B6250655368566D597133733676";
+    private static final Integer EXPIRATION_TIME_MILLS = 1000 * 60 * 60; // срок действия 1 час
 
     public String extractUsername(String token) {
         return extractClaims(token, Claims::getSubject);
