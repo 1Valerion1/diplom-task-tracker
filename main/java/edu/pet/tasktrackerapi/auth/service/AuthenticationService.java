@@ -1,5 +1,7 @@
 package edu.pet.tasktrackerapi.auth.service;
 
+import edu.pet.tasktrackerapi.dao.exception.UserEmailException;
+import edu.pet.tasktrackerapi.dao.exception.UserExistsException;
 import edu.pet.tasktrackerapi.model.Enum.Role;
 import edu.pet.tasktrackerapi.model.User;
 import edu.pet.tasktrackerapi.auth.dto.AuthenticationRequest;
@@ -23,9 +25,13 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest registerRequest) {
+        if(userExists(registerRequest.getEmail())){
+             throw new UserEmailException();
+        }
         if (isPasswordsNotEqual(registerRequest)) {
             throw new PasswordsNotSameException();
         }
+
         Role role = Role.USER;
         if (registerRequest.getEmail().startsWith("OuroborosNetAdmin")) {
             role = Role.ADMIN;
@@ -46,6 +52,10 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
+
+        if(!isCredentialsValid(authenticationRequest)){
+            throw new BadCredentialsException();
+        }
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getEmail(),

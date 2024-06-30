@@ -28,8 +28,9 @@ public class User implements UserDetails {
     private String email;
     @Column
     private final String username;
+
     @Column
-    private final String password;
+    private  String password;
     @Column
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -44,6 +45,9 @@ public class User implements UserDetails {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String getUsername() {

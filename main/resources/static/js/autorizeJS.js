@@ -46,8 +46,12 @@ function sendJsonData(event, form) {
         body: JSON.stringify(data)
     })
         .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+        if (response.status === 409 || response.status === 400) {
+            return response.json().then(errorData => {
+                throw new Error(errorData.message);
+            });
+        } else if (!response.ok) {
+            throw new Error('Unexpected error occurred');
         }
         return response.json();
     })
@@ -88,8 +92,12 @@ function sendJsonDataRegist(event, form) {
         body: JSON.stringify(data)
     })
         .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+        if (response.status === 409 || response.status === 400) {
+            return response.json().then(errorData => {
+                throw new Error(errorData.message);
+            });
+        } else if (!response.ok) {
+            throw new Error('Unexpected error occurred');
         }
         return response.json();
     })

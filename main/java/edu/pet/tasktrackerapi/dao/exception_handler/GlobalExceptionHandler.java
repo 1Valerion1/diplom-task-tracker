@@ -1,9 +1,6 @@
 package edu.pet.tasktrackerapi.dao.exception_handler;
 
-import edu.pet.tasktrackerapi.dao.exception.BadCredentialsException;
-import edu.pet.tasktrackerapi.dao.exception.BadRequestException;
-import edu.pet.tasktrackerapi.dao.exception.NotFoundException;
-import edu.pet.tasktrackerapi.dao.exception.UserExistsException;
+import edu.pet.tasktrackerapi.dao.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -49,5 +46,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(e, errorBody, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler(value = UserEmailException.class)
+    public ResponseEntity<Object> handleUserEmailException(UserEmailException ex, WebRequest request) {
+        ErrorMessage errorBody = new ErrorMessage("This email is used!");
 
+        return handleExceptionInternal(ex, errorBody, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    @ExceptionHandler(value = PasswordsNotSameException.class)
+    public ResponseEntity<Object> handlePasswordsNotSameException(PasswordsNotSameException ex, WebRequest request) {
+        ErrorMessage errorBody = new ErrorMessage("These passwords do not match");
+
+        return handleExceptionInternal(ex, errorBody, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 }

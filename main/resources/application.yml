@@ -17,12 +17,12 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 
-  rabbitmq:
-    username: guest
-    password: guest
-    host: localhost
-    port: 5672
-    addresses: 127.0.0.1:5672
+#  rabbitmq:
+#    username: guest
+#    password: guest
+#    host: localhost
+#    port: 5672
+#    addresses: 127.0.0.1:5672
 
 
 

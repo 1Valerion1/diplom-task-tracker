@@ -70,20 +70,12 @@ public class AuthenticationController {
     @PostMapping(value = "/register", produces="application/json")
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest registerRequest) throws JsonProcessingException {
 
-        if (authenticationService.userExists(registerRequest.getEmail())){
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Данные email уже зарегистрирован");
-        }
-        try {
             AuthenticationResponse authenticationResponse = authenticationService.register(registerRequest);
 
             rabbitMessageSender.sendWelcomeEmail(registerRequest.getEmail());
 
             return ResponseEntity.ok(authenticationResponse);
 
-        } catch (PasswordsNotSameException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Пароли не совпадают");
-        }
     }
 
     @Operation(description = "Аутентификация пользователя",
@@ -124,10 +116,6 @@ public class AuthenticationController {
     @PostMapping(value = "/authenticate", produces="application/json")
     public ResponseEntity<?> authenticate(@RequestBody @Valid AuthenticationRequest authenticationRequest) {
 
-        if (!authenticationService.isCredentialsValid(authenticationRequest)){
-
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Данный пароль неверен");
-        }
         return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest));
 
     }
