@@ -68,6 +68,8 @@ http://localhost:8081/swagger-ui/index.html
 * JS,HTML,CSS
 
 ## Для запуска проекта
+Создайте внутри проекта папку src и забросте все данные туда, а докер файлы и pom расположите на том же уровне, что и main и test
+(если не забуду, то сам исправлю тут)
 1) Собрать проект написав в терминале: mvn clean package
 2) Запустить Docker
 3) Cоздать и запустить в корне проекта docker_compose.yaml: docker-compose -f docker-compose.yaml up -d --build
