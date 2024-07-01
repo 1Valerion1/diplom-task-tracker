@@ -44,10 +44,8 @@ public class SubtaskController {
     @Operation(description = "Getting list of subtasks")
     @ResponseBody
     public List<SubtaskDTO> getSubtasks(@RequestParam("taskId") Long taskId){
-        Task task = taskService.getIdTask(taskId); // Предполагается, что у вас есть метод для получения Task по id
-//        if (task == null) {
-//            return ResponseEntity.notFound().build();
-//        }
+        Task task = taskService.getIdTask(taskId);
+
         System.out.println(subtaskService.getSubtask(task));;
 
         return subtaskService.getSubtask(task);
