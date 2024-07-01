@@ -120,7 +120,6 @@ public class AuthenticationController {
 
     }
 
-    
     @PostMapping("/updateProfile")
     public ResponseEntity<?> updateProfile(@AuthenticationPrincipal User currentUser,
                                            @RequestParam String newUsername, @RequestParam String newEmail) {
