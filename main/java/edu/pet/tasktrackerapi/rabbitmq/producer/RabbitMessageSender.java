@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class RabbitMessageSender {
-
     private final RabbitTemplate rabbitTemplate;
     private final RabbitMessageCreator rabbitMessageCreator;
     private final ObjectMapper objectMapper;
