@@ -106,6 +106,7 @@ public class AuthenticationController {
                                                             {
                                                                 "message": "Bad credentials!"
                                                             }
+                                                      
                                                             """
                                             )
                                     }
