@@ -67,3 +67,10 @@ http://localhost:8081/swagger-ui/index.html
 ####  За фронт отвечают:
 * Thymeleaf
 * JS,HTML,CSS
+
+## Для запуска проекта
+1) Собрать проект написав в терминале: mvn clean package
+2) Запустить Docker
+3) Cоздать и запустить в корне проекта docker_compose.yaml: docker-compose -f docker-compose.yaml up -d --build
+   или просто docker-compose up -d
+4) Посмотреть как работает проект: http://localhost:8081/api/v1/auth
