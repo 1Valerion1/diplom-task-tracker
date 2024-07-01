@@ -1,15 +1,14 @@
 package edu.pet.tasktrackerapi.auth.service;
 
-import edu.pet.tasktrackerapi.dao.exception.UserEmailException;
-import edu.pet.tasktrackerapi.dao.exception.UserExistsException;
-import edu.pet.tasktrackerapi.model.Enum.Role;
-import edu.pet.tasktrackerapi.model.User;
 import edu.pet.tasktrackerapi.auth.dto.AuthenticationRequest;
 import edu.pet.tasktrackerapi.auth.dto.AuthenticationResponse;
 import edu.pet.tasktrackerapi.auth.dto.RegisterRequest;
 import edu.pet.tasktrackerapi.dao.exception.BadCredentialsException;
 import edu.pet.tasktrackerapi.dao.exception.PasswordsNotSameException;
+import edu.pet.tasktrackerapi.dao.exception.UserEmailException;
 import edu.pet.tasktrackerapi.dao.repository.planner.UserRepository;
+import edu.pet.tasktrackerapi.model.Enum.Role;
+import edu.pet.tasktrackerapi.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -7,13 +7,13 @@ spring:
       username: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
-
-  rabbitmq:
-    username: ${RABBITMQ_DEFAULT_USER}
-    password: ${RABBITMQ_DEFAULT_PASS}
-    host: rabbitmq
-    port: 5672
-    addresses: ${RMQ_ADDRESS}
+#
+#  rabbitmq:
+#    username: ${RABBITMQ_DEFAULT_USER}
+#    password: ${RABBITMQ_DEFAULT_PASS}
+#    host: rabbitmq
+#    port: 5672
+#    addresses: ${RMQ_ADDRESS}
 
   config:
     activate:

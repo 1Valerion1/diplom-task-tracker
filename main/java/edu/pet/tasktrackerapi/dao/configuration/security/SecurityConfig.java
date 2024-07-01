@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                       //  .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/v1/statistics/**").permitAll()
                         .requestMatchers("/styles/**","/js/**","/static/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -44,8 +45,8 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
 
         return (web) -> web.ignoring()
-                .requestMatchers("/api/v1/auth/**")
                 .requestMatchers("/api/v1/statistics/**")
+                .requestMatchers("/api/v1/auth/**")
                 .requestMatchers("/api/v1/questions/**")
                 .requestMatchers("/api/v1/plans/**")
                 .requestMatchers("/api/v1/tasks/**")

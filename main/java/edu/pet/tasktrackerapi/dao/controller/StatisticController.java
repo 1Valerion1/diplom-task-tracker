@@ -28,10 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/api/v1/statistics")
-@Tag(name = "ParserHH", description = "Methods for parser hh")
+@RequiredArgsConstructor
+@Tag(name = "Statistic", description = "Methods for parser hh")
 public class StatisticController {
     @Autowired
     private RestTemplate restTemplate;
@@ -45,7 +46,7 @@ public class StatisticController {
 
     @GetMapping(value = "/updateData", produces = MediaType.APPLICATION_JSON_VALUE)
     @SecurityRequirement(name = "Bearer Authentication")
-    @Operation(description = "Getting Vacansy start update data")
+    @Operation(description = "Получение и обновление данных о вакансиях  HH и создание  их в таблице БД")
     @ResponseBody
     public ResponseEntity getVacancyJavJson() {
         String searchQuery = "Java";
